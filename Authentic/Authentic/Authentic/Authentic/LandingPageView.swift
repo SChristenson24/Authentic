@@ -20,13 +20,14 @@ struct LandingPageView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text("Welcome to")
+                            .foregroundColor(Color("darkgray"))
                             .font(.custom("Lexend-Regular", size: 35))
-                            .padding(.leading, 20)
-                            .padding(.top, 22290)
+                            .padding(.top, 20)
+                            .padding(.leading, 30)
                         Text("Authentic.")
-                            .font(.custom("Lexend-SemiBold", size: 40))
-                            .padding(.leading, 20)
-                            //.padding(.top, 40)
+                            .foregroundColor(Color("darkgray"))
+                            .font(.custom("Lexend-Bold", size: 40))
+                            .padding(.leading, 30)
                             
                     }
                     Spacer()
@@ -35,7 +36,8 @@ struct LandingPageView: View {
                 Image("landingStat")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 400, height: 600)
+                    .frame(width: 390, height: 550)
+                    .padding(.top, -90)
                 
                 TabView(selection: $currentQuoteIndex) {
                     ForEach(0..<quotes.count, id: \.self) { index in
