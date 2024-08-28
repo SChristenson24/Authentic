@@ -53,7 +53,6 @@ struct LandingPageView: View {
                 }
                 
                 Button(action: {
-                    // Handle the get started action
                 }) {
                     Text("Get Started")
                         .foregroundColor(.white)

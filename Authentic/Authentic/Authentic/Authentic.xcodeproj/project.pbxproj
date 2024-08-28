@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1DFA10572C7F87010099D390 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DFA10562C7F87010099D390 /* GoogleService-Info.plist */; };
 		214E07182B91905700208E20 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E07172B91905700208E20 /* SignUpView.swift */; };
 		214E071A2B91909900208E20 /* LandingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E07192B91909900208E20 /* LandingPageView.swift */; };
 		214E071C2B9191E500208E20 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E071B2B9191E500208E20 /* LogInView.swift */; };
@@ -19,7 +20,6 @@
 		2155DC2E2B901CF8007D6E3A /* AuthenticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2155DC2D2B901CF8007D6E3A /* AuthenticTests.swift */; };
 		2155DC382B901CF8007D6E3A /* AuthenticUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2155DC372B901CF8007D6E3A /* AuthenticUITests.swift */; };
 		2155DC3A2B901CF8007D6E3A /* AuthenticUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2155DC392B901CF8007D6E3A /* AuthenticUITestsLaunchTests.swift */; };
-		2155DC472B901F4A007D6E3A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2155DC462B901F4A007D6E3A /* GoogleService-Info.plist */; };
 		2155DC4A2B901FC8007D6E3A /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 2155DC492B901FC8007D6E3A /* Algorithms */; };
 		2155DC4D2B9021C7007D6E3A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2155DC4C2B9021C7007D6E3A /* FirebaseAnalytics */; };
 		2155DC4F2B9021C7007D6E3A /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2155DC4E2B9021C7007D6E3A /* FirebaseAnalyticsSwift */; };
@@ -72,6 +72,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1DFA10562C7F87010099D390 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		214E07172B91905700208E20 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		214E07192B91909900208E20 /* LandingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageView.swift; sourceTree = "<group>"; };
 		214E071B2B9191E500208E20 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
@@ -87,7 +88,6 @@
 		2155DC332B901CF8007D6E3A /* AuthenticUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuthenticUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2155DC372B901CF8007D6E3A /* AuthenticUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticUITests.swift; sourceTree = "<group>"; };
 		2155DC392B901CF8007D6E3A /* AuthenticUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		2155DC462B901F4A007D6E3A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		21DA5A252BB8857300047EA0 /* Lexend-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-Black.ttf"; sourceTree = "<group>"; };
 		21DA5A262BB8857300047EA0 /* Lexend-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-SemiBold.ttf"; sourceTree = "<group>"; };
 		21DA5A272BB8857300047EA0 /* Lexend-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-Thin.ttf"; sourceTree = "<group>"; };
@@ -178,11 +178,11 @@
 				2155DC1B2B901CF8007D6E3A /* Assets.xcassets */,
 				2155DC202B901CF8007D6E3A /* Persistence.swift */,
 				2155DC222B901CF8007D6E3A /* Authentic.xcdatamodeld */,
-				2155DC462B901F4A007D6E3A /* GoogleService-Info.plist */,
 				2155DC1D2B901CF8007D6E3A /* Preview Content */,
 				214E07172B91905700208E20 /* SignUpView.swift */,
 				214E071B2B9191E500208E20 /* LogInView.swift */,
 				214E07192B91909900208E20 /* LandingPageView.swift */,
+				1DFA10562C7F87010099D390 /* GoogleService-Info.plist */,
 			);
 			path = Authentic;
 			sourceTree = "<group>";
@@ -366,10 +366,10 @@
 				21DA5A302BB8857400047EA0 /* Lexend-Thin.ttf in Resources */,
 				21DA5A332BB8857400047EA0 /* Lexend-ExtraBold.ttf in Resources */,
 				2155DC1F2B901CF8007D6E3A /* Preview Assets.xcassets in Resources */,
+				1DFA10572C7F87010099D390 /* GoogleService-Info.plist in Resources */,
 				21DA5A342BB8857400047EA0 /* Lexend-Bold.ttf in Resources */,
 				2155DC1C2B901CF8007D6E3A /* Assets.xcassets in Resources */,
 				21DA5A2E2BB8857400047EA0 /* Lexend-Black.ttf in Resources */,
-				2155DC472B901F4A007D6E3A /* GoogleService-Info.plist in Resources */,
 				21DA5A362BB8857400047EA0 /* Lexend-Regular.ttf in Resources */,
 				21DA5A312BB8857400047EA0 /* Lexend-Medium.ttf in Resources */,
 				21DA5A352BB8857400047EA0 /* Lexend-ExtraLight.ttf in Resources */,
