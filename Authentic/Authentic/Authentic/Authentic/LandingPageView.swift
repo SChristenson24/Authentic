@@ -1,6 +1,10 @@
 import SwiftUI
 
+
+
 struct LandingPageView: View {
+    @State private var showingSignUp = false
+    
     private let quotes = [
         "Quote 1",
         "Quote 2",
@@ -55,6 +59,7 @@ struct LandingPageView: View {
                 }
                 
                 Button(action: {
+                    showingSignUp.toggle()
                 }) {
                     Text("Get Started")
                         .foregroundColor(.white)
@@ -69,6 +74,10 @@ struct LandingPageView: View {
         }
         .onAppear {
             _ = self.timer
+        }
+        
+        .fullScreenCover(isPresented: $showingSignUp) {
+            SignUpView()
         }
     }
 }
