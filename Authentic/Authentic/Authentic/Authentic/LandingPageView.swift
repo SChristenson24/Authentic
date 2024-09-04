@@ -6,10 +6,10 @@ struct LandingPageView: View {
     @State private var showingSignUp = false
     
     private let quotes = [
-        "Quote 1",
-        "Quote 2",
-        "Quote 3",
-        "Quote 4"
+        "Your space for real connections, real stories, and real empowerment. Be you, be Authentic.",
+        "True beauty shines when you embrace your authentic self.",
+        "Your story, your voice, your truth—celebrate it every day.",
+        "In a world full of filters, be the unfiltered you."
     ]
     
     @State private var currentQuoteIndex = 0
