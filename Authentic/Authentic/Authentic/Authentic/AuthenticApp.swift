@@ -23,7 +23,7 @@ struct AuthenticApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SignUpView()
+            LandingPageView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
