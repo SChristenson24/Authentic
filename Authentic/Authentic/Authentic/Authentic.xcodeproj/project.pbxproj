@@ -12,7 +12,6 @@
 		214E071A2B91909900208E20 /* LandingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E07192B91909900208E20 /* LandingPageView.swift */; };
 		214E071C2B9191E500208E20 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E071B2B9191E500208E20 /* LogInView.swift */; };
 		2155DC182B901CF6007D6E3A /* AuthenticApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2155DC172B901CF6007D6E3A /* AuthenticApp.swift */; };
-		2155DC1A2B901CF6007D6E3A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2155DC192B901CF6007D6E3A /* ContentView.swift */; };
 		2155DC1C2B901CF8007D6E3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2155DC1B2B901CF8007D6E3A /* Assets.xcassets */; };
 		2155DC1F2B901CF8007D6E3A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2155DC1E2B901CF8007D6E3A /* Preview Assets.xcassets */; };
 		2155DC212B901CF8007D6E3A /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2155DC202B901CF8007D6E3A /* Persistence.swift */; };
@@ -78,7 +77,6 @@
 		214E071B2B9191E500208E20 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		2155DC142B901CF6007D6E3A /* Authentic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Authentic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2155DC172B901CF6007D6E3A /* AuthenticApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticApp.swift; sourceTree = "<group>"; };
-		2155DC192B901CF6007D6E3A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2155DC1B2B901CF8007D6E3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2155DC1E2B901CF8007D6E3A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2155DC202B901CF8007D6E3A /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -174,7 +172,6 @@
 				21DA5A382BB8875B00047EA0 /* Info.plist */,
 				21DA5A372BB8859D00047EA0 /* Fonts */,
 				2155DC172B901CF6007D6E3A /* AuthenticApp.swift */,
-				2155DC192B901CF6007D6E3A /* ContentView.swift */,
 				2155DC1B2B901CF8007D6E3A /* Assets.xcassets */,
 				2155DC202B901CF8007D6E3A /* Persistence.swift */,
 				2155DC222B901CF8007D6E3A /* Authentic.xcdatamodeld */,
@@ -401,7 +398,6 @@
 				214E071C2B9191E500208E20 /* LogInView.swift in Sources */,
 				214E071A2B91909900208E20 /* LandingPageView.swift in Sources */,
 				214E07182B91905700208E20 /* SignUpView.swift in Sources */,
-				2155DC1A2B901CF6007D6E3A /* ContentView.swift in Sources */,
 				2155DC182B901CF6007D6E3A /* AuthenticApp.swift in Sources */,
 				2155DC242B901CF8007D6E3A /* Authentic.xcdatamodeld in Sources */,
 			);

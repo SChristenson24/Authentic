@@ -96,8 +96,8 @@ struct SignUpView: View {
                                 .foregroundColor(Color("lpink"))
                         }
                     }
-                    .padding(.top, 50) // Reduced padding to move the "Next" button lower
-                    .padding(.bottom, 60) // Increase bottom padding to push the "Next" button further down if needed
+                    .padding(.top, 50) 
+                    .padding(.bottom, 60)
                     
                     Spacer()
                 }

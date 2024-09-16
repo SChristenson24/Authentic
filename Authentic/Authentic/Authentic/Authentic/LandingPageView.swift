@@ -1,11 +1,15 @@
 import SwiftUI
 
+
+
 struct LandingPageView: View {
+    @State private var showingSignUp = false
+    
     private let quotes = [
-        "Quote 1",
-        "Quote 2",
-        "Quote 3",
-        "Quote 4"
+        "Your space for real connections, real stories, and real empowerment. Be you, be Authentic.",
+        "True beauty shines when you embrace your authentic self.",
+        "Your story, your voice, your truth—celebrate it every day.",
+        "In a world full of filters, be the unfiltered you."
     ]
     
     @State private var currentQuoteIndex = 0
@@ -20,13 +24,14 @@ struct LandingPageView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text("Welcome to")
+                            .foregroundColor(Color("darkgray"))
                             .font(.custom("Lexend-Regular", size: 35))
-                            .padding(.leading, 20)
-                            .padding(.top, 22290)
+                            .padding(.top, 20)
+                            .padding(.leading, 30)
                         Text("Authentic.")
-                            .font(.custom("Lexend-SemiBold", size: 40))
-                            .padding(.leading, 20)
-                            //.padding(.top, 40)
+                            .foregroundColor(Color("darkgray"))
+                            .font(.custom("Lexend-Bold", size: 40))
+                            .padding(.leading, 30)
                             
                     }
                     Spacer()
@@ -35,7 +40,8 @@ struct LandingPageView: View {
                 Image("landingStat")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 400, height: 600)
+                    .frame(width: 390, height: 550)
+                    .padding(.top, -90)
                 
                 TabView(selection: $currentQuoteIndex) {
                     ForEach(0..<quotes.count, id: \.self) { index in
@@ -53,6 +59,7 @@ struct LandingPageView: View {
                 }
                 
                 Button(action: {
+                    showingSignUp.toggle()
                 }) {
                     Text("Get Started")
                         .foregroundColor(.white)
@@ -67,6 +74,10 @@ struct LandingPageView: View {
         }
         .onAppear {
             _ = self.timer
+        }
+        
+        .fullScreenCover(isPresented: $showingSignUp) {
+            SignUpView()
         }
     }
 }
