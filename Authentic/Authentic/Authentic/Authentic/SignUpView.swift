@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
@@ -22,7 +23,9 @@ struct SignUpView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var showingLogin = false
-
+    @State private var error: String = ""
+    @State private var isLoading = false  
+    
     var body: some View {
         ZStack(alignment: .top) {
             
@@ -76,16 +79,24 @@ struct SignUpView: View {
                         .padding(.horizontal, 25)
                         .padding(.bottom, 30)
                     
-                    
-                    Button("Next") {
+                    Button(action: {
+                        signUp()
+                    }){
+                        Text("Next")
+                        .padding()
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .background(Color("lpink"))
+                        .cornerRadius(25)
+                        .padding(.horizontal, 50)
                     }
-                    .padding()
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .background(Color("lpink"))
-                    .cornerRadius(25)
-                    .padding(.horizontal, 50)
+                    .disabled(isLoading)
                     
+                    if !error.isEmpty{
+                        Text(error)
+                            .foregroundColor(.red)
+                            .padding(.top, 10)
+                    }
                     HStack {
                         Text("Already have an account?")
                         Button(action: {
@@ -110,6 +121,19 @@ struct SignUpView: View {
         .sheet(isPresented: $showingLogin) {
             LoginView()
         }
+    }
+    func signUp(){
+        isLoading = true
+        error = ""
+        
+        Auth.auth().createUser(withEmail: email, password: password){result, error in isLoading = false
+            
+            if let error = error {
+                self.error = error.localizedDescription
+                return
+                    
+                }
+            }
     }
 }
 
