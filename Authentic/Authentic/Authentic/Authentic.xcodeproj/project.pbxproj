@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1DFA10572C7F87010099D390 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1DFA10562C7F87010099D390 /* GoogleService-Info.plist */; };
 		214E07182B91905700208E20 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E07172B91905700208E20 /* SignUpView.swift */; };
 		214E071A2B91909900208E20 /* LandingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E07192B91909900208E20 /* LandingPageView.swift */; };
 		214E071C2B9191E500208E20 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E071B2B9191E500208E20 /* LogInView.swift */; };
@@ -57,6 +56,7 @@
 		D5FB3CCC2C9E66A400257511 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB3CCB2C9E66A400257511 /* Stories.swift */; };
 		D5FB3CCE2C9E673E00257511 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB3CCD2C9E673E00257511 /* Comment.swift */; };
 		D5FB3CD02C9E674B00257511 /* Impression.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB3CCF2C9E674B00257511 /* Impression.swift */; };
+		D5FB3CD22C9E70E500257511 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5FB3CD12C9E70E500257511 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,7 +77,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1DFA10562C7F87010099D390 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		214E07172B91905700208E20 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		214E07192B91909900208E20 /* LandingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageView.swift; sourceTree = "<group>"; };
 		214E071B2B9191E500208E20 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
@@ -108,6 +107,7 @@
 		D5FB3CCB2C9E66A400257511 /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
 		D5FB3CCD2C9E673E00257511 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		D5FB3CCF2C9E674B00257511 /* Impression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Impression.swift; sourceTree = "<group>"; };
+		D5FB3CD12C9E70E500257511 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,7 +192,7 @@
 				214E07172B91905700208E20 /* SignUpView.swift */,
 				214E071B2B9191E500208E20 /* LogInView.swift */,
 				214E07192B91909900208E20 /* LandingPageView.swift */,
-				1DFA10562C7F87010099D390 /* GoogleService-Info.plist */,
+				D5FB3CD12C9E70E500257511 /* GoogleService-Info.plist */,
 			);
 			path = Authentic;
 			sourceTree = "<group>";
@@ -389,7 +389,7 @@
 				21DA5A302BB8857400047EA0 /* Lexend-Thin.ttf in Resources */,
 				21DA5A332BB8857400047EA0 /* Lexend-ExtraBold.ttf in Resources */,
 				2155DC1F2B901CF8007D6E3A /* Preview Assets.xcassets in Resources */,
-				1DFA10572C7F87010099D390 /* GoogleService-Info.plist in Resources */,
+				D5FB3CD22C9E70E500257511 /* GoogleService-Info.plist in Resources */,
 				21DA5A342BB8857400047EA0 /* Lexend-Bold.ttf in Resources */,
 				2155DC1C2B901CF8007D6E3A /* Assets.xcassets in Resources */,
 				21DA5A2E2BB8857400047EA0 /* Lexend-Black.ttf in Resources */,
