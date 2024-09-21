@@ -1,0 +1,9 @@
+//
+//  .gitignore
+//  Authentic
+//
+//  Created by Amanuel Tesfaye on 9/21/24.
+//
+
+*.xcuserstate
+
