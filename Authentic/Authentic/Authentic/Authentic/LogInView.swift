@@ -40,12 +40,19 @@ struct LoginView: View {
                         .padding(.trailing, 270)
                         .foregroundColor(Color.gray)
                     
-                    TextField("", text: $email)
-                        .padding()
-                        .background(Color("lightgray"))
-                        .cornerRadius(25)
-                        .shadow(radius: 1)
-                        .padding(.horizontal, 25)
+                    HStack {
+                        Image(systemName: "envelope.fill")
+                            .foregroundColor(.gray)
+                            .padding(.leading, 2)
+                        
+                        TextField("", text: $email)
+                            .padding(.leading, 10)
+                    }
+                    .padding()
+                    .background(Color("lightgray"))
+                    .cornerRadius(25)
+                    .shadow(radius: 1)
+                    .padding(.horizontal, 45)
                     
                     Text("Password")
                         .font(.custom("Lexend-Thin", size: 16))
@@ -54,13 +61,57 @@ struct LoginView: View {
                         .padding(.trailing, 250)
                         .foregroundColor(Color.gray)
                     
-                    SecureField("", text: $password)
+                    HStack{
+                        Image(systemName: "key.fill")
+                            .foregroundColor(.gray)
+                            .padding(.leading, 2)
+                            .rotationEffect(.degrees(45))
+                        SecureField("", text: $password)
+                            .padding(.leading, 10)
+                    }
                         .padding()
                         .background(Color("lightgray"))
                         .cornerRadius(25)
                         .shadow(radius: 1)
-                        .padding(.horizontal, 25)
+                        .padding(.horizontal, 45)
                         .padding(.bottom, 30)
+                    
+                    HStack(spacing: 30) {
+                        Button(action: {
+                            // do smtn here
+                        }){
+                            Image("fbicon")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 60, height: 60)
+                                .clipShape(Circle())
+                                .shadow(radius: 2)
+                                .padding(.bottom, 10)
+                        }
+                        Button(action: {
+                            // do smtn here
+                        }){
+                            Image("appleicon")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
+                                .shadow(radius: 2)
+                                .padding(.bottom, 10)
+                        }
+                        
+                        Button(action: {
+                            // do smtn here
+                        }){
+                            Image("googleicon")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
+                                .shadow(radius: 2)
+                                .padding(.bottom, 10)
+                        }
+                    }
                     
                     Button("Log In") {
                         // Handle the login logic here
@@ -70,7 +121,7 @@ struct LoginView: View {
                     .frame(maxWidth: .infinity)
                     .background(Color("lpink"))
                     .cornerRadius(25)
-                    .padding(.horizontal, 50)
+                    .padding(.horizontal, 80)
 
                     HStack {
                         Text("Don't have an account?")
@@ -79,7 +130,7 @@ struct LoginView: View {
                         }) {
                             Text("Sign Up")
                                 .fontWeight(.semibold)
-                                .foregroundColor(Color("lpink"))
+                                .foregroundColor(Color("bpink"))
                         }
                     }
                     .padding(.top, 20)
