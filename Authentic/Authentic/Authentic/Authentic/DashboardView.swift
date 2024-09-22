@@ -15,7 +15,7 @@ struct DashboardView: View {
             ScrollView {
                 VStack {
                     HStack {
-                        // Search Button
+                        // search button
                         Button(action: {
                             withAnimation(.spring()) {
                                 isExpanded.toggle()
@@ -41,7 +41,7 @@ struct DashboardView: View {
                         
                         Spacer()
                         
-                        // Messaging Icon
+                        // message icon
                         if !isExpanded {
                             Button(action: {}) {
                                 Image(systemName: "message")
@@ -54,27 +54,24 @@ struct DashboardView: View {
                         }
                     }
                     .padding([.leading, .top], 10)
-                    
-                    // Horizontally scrollable profiles
-                    // Horizontally scrollable profiles
+                
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 20) {
                             ForEach(0..<10, id: \.self) { index in
                                 VStack {
                                     ZStack {
-                                        // Remove the Circle() stroke
                                         Circle()
                                             .fill(Color.pink)
                                             .frame(width: 90, height: 90)
-                                        
+                                    // you to be replaced by actual user
                                         Image("you")
                                             .resizable()
                                             .scaledToFill()
                                             .frame(width: 90, height: 90)
-                                            .clipShape(Circle()) // Clip to circle shape
+                                            .clipShape(Circle())
                                             .overlay(
                                                 Circle()
-                                                    .stroke(Color.pink, lineWidth: 3) // Optional: Add a stroke if needed
+                                                    .stroke(Color.pink, lineWidth: 3)
                                             )
 
                                         if index == 0 {
@@ -84,6 +81,7 @@ struct DashboardView: View {
                                                 .offset(x: 30, y: 33)
                                         }
                                     }
+                                    
                                     
                                     if index == 0 {
                                         Text("You")
@@ -102,15 +100,13 @@ struct DashboardView: View {
 
                     .padding(.top, 20)
 
-                    // Posts Section
+                    // posts Section
                     VStack(spacing: 10) {
                         ForEach(0..<10, id: \.self) { index in
                             VStack {
-                                // Post Card
                                 ZStack {
                                     
                                     VStack(alignment: .leading) {
-                                        // Post Header with Profile and Three Dots
                                         HStack {
                                             HStack(spacing: 10) {
                                                 Image("pp2")
@@ -130,7 +126,6 @@ struct DashboardView: View {
                                             }
                                             Spacer()
                                             Button(action: {
-                                                // Action for three dots
                                             }) {
                                                 Image(systemName: "ellipsis")
                                                     .foregroundColor(.gray)
@@ -139,7 +134,6 @@ struct DashboardView: View {
                                         }
                                         .padding([.top, .horizontal])
 
-                                        // Post Image (placeholder)
                                         Image("pic1")
                                             .resizable()
                                             .scaledToFill()
@@ -148,7 +142,6 @@ struct DashboardView: View {
                                             .clipped()
                                             .cornerRadius(20)
 
-                                        // Post Description
                                         HStack {
                                             Text("Loving the View! ")
                                                 .font(.custom("Lexend-Thin", size: 14))
@@ -162,7 +155,7 @@ struct DashboardView: View {
                                         .padding([.horizontal, .bottom])
                                         .padding(.top, 8)
                                         
-                                        // Action Buttons
+                                        // action buttons
                                         HStack {
                                             Button(action: {}) {
                                                 HStack{
@@ -224,7 +217,7 @@ struct DashboardView: View {
                                     
                                             
 
-            // Bottom Dashboard
+            // bottom dashboard
             VStack {
                 Spacer()
                 HStack {
