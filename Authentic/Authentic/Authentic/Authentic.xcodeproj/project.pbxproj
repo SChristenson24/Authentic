@@ -52,6 +52,11 @@
 		21DA5A362BB8857400047EA0 /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21DA5A2D2BB8857300047EA0 /* Lexend-Regular.ttf */; };
 		CF0B8D892C8D429D002D1966 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF0B8D882C8D429D002D1966 /* GoogleService-Info.plist */; };
 		CFC295562C9F6FC1008007AB /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC295552C9F6FB2008007AB /* DashboardView.swift */; };
+		CFEBBDED2CA0C688005F2832 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEBBDEC2CA0C681005F2832 /* ProfileView.swift */; };
+		CFEBBDEF2CA0C8CD005F2832 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEBBDEE2CA0C8CA005F2832 /* HomeView.swift */; };
+		CFEBBDF12CA0C908005F2832 /* NewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEBBDF02CA0C903005F2832 /* NewsView.swift */; };
+		CFEBBDF32CA0C929005F2832 /* CreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEBBDF22CA0C926005F2832 /* CreateView.swift */; };
+		CFEBBDF52CA0C940005F2832 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEBBDF42CA0C93B005F2832 /* NotificationsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +103,11 @@
 		21DA5A382BB8875B00047EA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CF0B8D882C8D429D002D1966 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CFC295552C9F6FB2008007AB /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		CFEBBDEC2CA0C681005F2832 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		CFEBBDEE2CA0C8CA005F2832 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		CFEBBDF02CA0C903005F2832 /* NewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsView.swift; sourceTree = "<group>"; };
+		CFEBBDF22CA0C926005F2832 /* CreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateView.swift; sourceTree = "<group>"; };
+		CFEBBDF42CA0C93B005F2832 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +181,11 @@
 		2155DC162B901CF6007D6E3A /* Authentic */ = {
 			isa = PBXGroup;
 			children = (
+				CFEBBDF42CA0C93B005F2832 /* NotificationsView.swift */,
+				CFEBBDF22CA0C926005F2832 /* CreateView.swift */,
+				CFEBBDF02CA0C903005F2832 /* NewsView.swift */,
+				CFEBBDEE2CA0C8CA005F2832 /* HomeView.swift */,
+				CFEBBDEC2CA0C681005F2832 /* ProfileView.swift */,
 				CFC295552C9F6FB2008007AB /* DashboardView.swift */,
 				21DA5A382BB8875B00047EA0 /* Info.plist */,
 				21DA5A372BB8859D00047EA0 /* Fonts */,
@@ -397,13 +412,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFEBBDF32CA0C929005F2832 /* CreateView.swift in Sources */,
+				CFEBBDEF2CA0C8CD005F2832 /* HomeView.swift in Sources */,
+				CFEBBDED2CA0C688005F2832 /* ProfileView.swift in Sources */,
 				2155DC212B901CF8007D6E3A /* Persistence.swift in Sources */,
+				CFEBBDF12CA0C908005F2832 /* NewsView.swift in Sources */,
 				214E071C2B9191E500208E20 /* LogInView.swift in Sources */,
 				214E071A2B91909900208E20 /* LandingPageView.swift in Sources */,
 				CFC295562C9F6FC1008007AB /* DashboardView.swift in Sources */,
 				214E07182B91905700208E20 /* SignUpView.swift in Sources */,
 				2155DC182B901CF6007D6E3A /* AuthenticApp.swift in Sources */,
 				2155DC242B901CF8007D6E3A /* Authentic.xcdatamodeld in Sources */,
+				CFEBBDF52CA0C940005F2832 /* NotificationsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
