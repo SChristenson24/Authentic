@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct LoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var showingSignUp = false
-
+    @State private var isLoading = false
+    @State private var error: String = ""
+    @State private var isLoggedIn = false
+    
     var body: some View {
         ZStack(alignment: .top) {
             Color("lpink").edgesIgnoringSafeArea(.all)
@@ -32,7 +36,7 @@ struct LoginView: View {
                         .padding(.bottom, 20)
                         .foregroundColor(Color("darkgray"))
                         .padding(.trailing, 180)
-
+                    
                     Text("Email")
                         .font(.custom("Lexend-Thin", size: 16))
                         .padding(.top, -10)
@@ -69,13 +73,22 @@ struct LoginView: View {
                         SecureField("", text: $password)
                             .padding(.leading, 10)
                     }
-                        .padding()
-                        .background(Color("lightgray"))
-                        .cornerRadius(25)
-                        .shadow(radius: 1)
-                        .padding(.horizontal, 45)
-                        .padding(.bottom, 30)
+                    .padding()
+                    .background(Color("lightgray"))
+                    .cornerRadius(25)
+                    .shadow(radius: 1)
+                    .padding(.horizontal, 45)
+                    .padding(.bottom, 30)
                     
+                    if !error.isEmpty{
+                        Text(error)
+                            .foregroundColor(.red)
+                            .padding(.bottom, 10)
+                    }
+                    if isLoading{
+                        ProgressView()
+                            .padding(.bottom, 20)
+                    }
                     HStack(spacing: 30) {
                         Button(action: {
                             // do smtn here
@@ -114,7 +127,7 @@ struct LoginView: View {
                     }
                     
                     Button("Log In") {
-                        // Handle the login logic here
+                        signIn()
                     }
                     .padding()
                     .foregroundColor(.white)
@@ -122,7 +135,7 @@ struct LoginView: View {
                     .background(Color("lpink"))
                     .cornerRadius(25)
                     .padding(.horizontal, 80)
-
+                    
                     HStack {
                         Text("Don't have an account?")
                         Button(action: {
@@ -147,11 +160,30 @@ struct LoginView: View {
         .sheet(isPresented: $showingSignUp) {
             SignUpView()
         }
+        .fullScreenCover(isPresented: $isLoggedIn)
+        {
+            LandingPageView() //********WILL NEED UPDATED APPROPRIATELY**********
+        }
     }
-}
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
+    
+    
+    
+    func signIn() {
+        isLoading = true
+        error = ""
+        
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            DispatchQueue.main.async {
+                self.isLoading = false
+                
+                if let error = error {
+                    self.error = error.localizedDescription
+                    return
+                }
+                
+                self.isLoggedIn = true
+                
+            }
+        }
     }
 }

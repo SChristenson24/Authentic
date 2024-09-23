@@ -132,7 +132,7 @@ struct SignUpView: View {
                     
                     
                     Button("Next") {
-                                    
+                        signUp()
                                 }
 
                     .padding()
