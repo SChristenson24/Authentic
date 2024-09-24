@@ -7,31 +7,15 @@
 
 import SwiftUI
 import FirebaseAuth
-import GoogleSignIn
-import GoogleSignInSwift
 
-struct GoogleSignInResultModel{
-    let idToken: String
-    let accessToken: String
-}
 
 @MainActor
 final class LoginViewModel: ObservableObject{
     func singInGoogle() async throws{
-        guard let TopVC = Utilities.shared.topViewController() else{
-            throw URLError(.cannotFindHost)
-        }
-        let gidSignInResult = try await GIDSignIn.sharedInstance.signIn(withPresenting: TopVC)
-        
-        guard let idToken = gidSignInResult.user.idToken?.tokenString else {
-            throw URLError(.badServerResponse)
-        }
-        
-        let accessToken = gidSignInResult.user.accessToken.tokenString
-        
-        let tokens = GoogleSignInResultModel(idToken: idToken, accessToken: accessToken)
+       
+        let helper = SignInGoogleHelper()
+        let tokens = try await helper.signIn()
         try await AuthenticationManager.shared.signInWithGoogle(tokens: tokens)
-        
         
     }
 }
@@ -146,7 +130,8 @@ struct LoginView: View {
                             Task{
                                 do{
                                     try await viewModel.singInGoogle()
-                                    showLogInView = false
+                                    isLoggedIn = true
+                                    
                                 } catch {
                                     print(error)
                                 }
@@ -198,7 +183,7 @@ struct LoginView: View {
         }
         .fullScreenCover(isPresented: $isLoggedIn)
         {
-            LandingPageView() //********WILL NEED UPDATED APPROPRIATELY**********
+            SuccessView() //********WILL NEED UPDATED APPROPRIATELY**********
         }
     }
     

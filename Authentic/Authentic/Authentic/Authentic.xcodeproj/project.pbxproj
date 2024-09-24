@@ -54,6 +54,8 @@
 		B223666C2CA32951006F1B31 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B223666B2CA32951006F1B31 /* GoogleSignIn */; };
 		B223666E2CA32951006F1B31 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B223666D2CA32951006F1B31 /* GoogleSignInSwift */; };
 		B22366712CA32D09006F1B31 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22366702CA32CFB006F1B31 /* Utilities.swift */; };
+		B22366732CA342CA006F1B31 /* SignInGoogleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22366722CA342C3006F1B31 /* SignInGoogleHelper.swift */; };
+		B22366752CA34623006F1B31 /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22366742CA3461C006F1B31 /* SuccessView.swift */; };
 		CF0B8D892C8D429D002D1966 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF0B8D882C8D429D002D1966 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -101,6 +103,8 @@
 		21DA5A382BB8875B00047EA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B22366682CA32923006F1B31 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		B22366702CA32CFB006F1B31 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		B22366722CA342C3006F1B31 /* SignInGoogleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInGoogleHelper.swift; sourceTree = "<group>"; };
+		B22366742CA3461C006F1B31 /* SuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
 		CF0B8D882C8D429D002D1966 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -177,6 +181,8 @@
 		2155DC162B901CF6007D6E3A /* Authentic */ = {
 			isa = PBXGroup;
 			children = (
+				B22366742CA3461C006F1B31 /* SuccessView.swift */,
+				B22366722CA342C3006F1B31 /* SignInGoogleHelper.swift */,
 				B223666F2CA32CEA006F1B31 /* Utilities */,
 				B22366682CA32923006F1B31 /* AuthenticationManager.swift */,
 				21DA5A382BB8875B00047EA0 /* Info.plist */,
@@ -417,8 +423,10 @@
 			files = (
 				2155DC212B901CF8007D6E3A /* Persistence.swift in Sources */,
 				214E071C2B9191E500208E20 /* LogInView.swift in Sources */,
+				B22366752CA34623006F1B31 /* SuccessView.swift in Sources */,
 				B22366692CA3292B006F1B31 /* AuthenticationManager.swift in Sources */,
 				214E071A2B91909900208E20 /* LandingPageView.swift in Sources */,
+				B22366732CA342CA006F1B31 /* SignInGoogleHelper.swift in Sources */,
 				214E07182B91905700208E20 /* SignUpView.swift in Sources */,
 				2155DC182B901CF6007D6E3A /* AuthenticApp.swift in Sources */,
 				B22366712CA32D09006F1B31 /* Utilities.swift in Sources */,
