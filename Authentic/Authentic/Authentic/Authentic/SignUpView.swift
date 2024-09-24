@@ -169,7 +169,7 @@ struct SignUpView: View {
             }
         }
         .sheet(isPresented: $showingLogin) {
-            LoginView()
+            LoginView(showLogInView: $showingLogin)
         }
     }
     func signUp(){

@@ -7,14 +7,43 @@
 
 import SwiftUI
 import FirebaseAuth
+import GoogleSignIn
+import GoogleSignInSwift
 
+struct GoogleSignInResultModel{
+    let idToken: String
+    let accessToken: String
+}
+
+@MainActor
+final class LoginViewModel: ObservableObject{
+    func singInGoogle() async throws{
+        guard let TopVC = Utilities.shared.topViewController() else{
+            throw URLError(.cannotFindHost)
+        }
+        let gidSignInResult = try await GIDSignIn.sharedInstance.signIn(withPresenting: TopVC)
+        
+        guard let idToken = gidSignInResult.user.idToken?.tokenString else {
+            throw URLError(.badServerResponse)
+        }
+        
+        let accessToken = gidSignInResult.user.accessToken.tokenString
+        
+        let tokens = GoogleSignInResultModel(idToken: idToken, accessToken: accessToken)
+        try await AuthenticationManager.shared.signInWithGoogle(tokens: tokens)
+        
+        
+    }
+}
 struct LoginView: View {
+    @StateObject private var viewModel = LoginViewModel()
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var showingSignUp = false
     @State private var isLoading = false
     @State private var error: String = ""
     @State private var isLoggedIn = false
+    @Binding var showLogInView: Bool
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -114,7 +143,14 @@ struct LoginView: View {
                         }
                         
                         Button(action: {
-                            // do smtn here
+                            Task{
+                                do{
+                                    try await viewModel.singInGoogle()
+                                    showLogInView = false
+                                } catch {
+                                    print(error)
+                                }
+                            }
                         }){
                             Image("googleicon")
                                 .resizable()
