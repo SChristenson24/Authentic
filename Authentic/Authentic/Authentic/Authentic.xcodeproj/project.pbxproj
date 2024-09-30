@@ -50,6 +50,7 @@
 		21DA5A342BB8857400047EA0 /* Lexend-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21DA5A2B2BB8857300047EA0 /* Lexend-Bold.ttf */; };
 		21DA5A352BB8857400047EA0 /* Lexend-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21DA5A2C2BB8857300047EA0 /* Lexend-ExtraLight.ttf */; };
 		21DA5A362BB8857400047EA0 /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21DA5A2D2BB8857300047EA0 /* Lexend-Regular.ttf */; };
+		B2168A7B2CAA4A1A00119782 /* SignInFacebookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2168A7A2CAA4A0300119782 /* SignInFacebookHelper.swift */; };
 		B22366692CA3292B006F1B31 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22366682CA32923006F1B31 /* AuthenticationManager.swift */; };
 		B223666C2CA32951006F1B31 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B223666B2CA32951006F1B31 /* GoogleSignIn */; };
 		B223666E2CA32951006F1B31 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B223666D2CA32951006F1B31 /* GoogleSignInSwift */; };
@@ -103,6 +104,7 @@
 		21DA5A2C2BB8857300047EA0 /* Lexend-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-ExtraLight.ttf"; sourceTree = "<group>"; };
 		21DA5A2D2BB8857300047EA0 /* Lexend-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-Regular.ttf"; sourceTree = "<group>"; };
 		21DA5A382BB8875B00047EA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B2168A7A2CAA4A0300119782 /* SignInFacebookHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInFacebookHelper.swift; sourceTree = "<group>"; };
 		B22366682CA32923006F1B31 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		B22366702CA32CFB006F1B31 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		B22366722CA342C3006F1B31 /* SignInGoogleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInGoogleHelper.swift; sourceTree = "<group>"; };
@@ -186,11 +188,12 @@
 		2155DC162B901CF6007D6E3A /* Authentic */ = {
 			isa = PBXGroup;
 			children = (
+				B2168A7A2CAA4A0300119782 /* SignInFacebookHelper.swift */,
 				B2A22B142CA399DE001DDF8B /* Authentic.entitlements */,
 				B22366742CA3461C006F1B31 /* SuccessView.swift */,
-				B22366722CA342C3006F1B31 /* SignInGoogleHelper.swift */,
 				B223666F2CA32CEA006F1B31 /* Utilities */,
 				B22366682CA32923006F1B31 /* AuthenticationManager.swift */,
+				B22366722CA342C3006F1B31 /* SignInGoogleHelper.swift */,
 				21DA5A382BB8875B00047EA0 /* Info.plist */,
 				21DA5A372BB8859D00047EA0 /* Fonts */,
 				2155DC172B901CF6007D6E3A /* AuthenticApp.swift */,
@@ -431,6 +434,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2155DC212B901CF8007D6E3A /* Persistence.swift in Sources */,
+				B2168A7B2CAA4A1A00119782 /* SignInFacebookHelper.swift in Sources */,
 				214E071C2B9191E500208E20 /* LogInView.swift in Sources */,
 				B22366752CA34623006F1B31 /* SuccessView.swift in Sources */,
 				B22366692CA3292B006F1B31 /* AuthenticationManager.swift in Sources */,

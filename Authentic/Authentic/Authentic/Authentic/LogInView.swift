@@ -21,31 +21,10 @@ final class LoginViewModel: ObservableObject{
         
     }
     func signInWithFacebook() async throws {
-           let loginManager = LoginManager()
-           
-           // Convert the completion handler to async using `withCheckedThrowingContinuation`
-           let result: LoginManagerLoginResult = try await withCheckedThrowingContinuation { continuation in
-               loginManager.logIn(permissions: ["public_profile", "email"], from: nil) { result, error in
-                   if let error = error {
-                       continuation.resume(throwing: error)
-                   } else if let result = result, result.isCancelled {
-                       continuation.resume(throwing: NSError(domain: "FacebookLoginError", code: 1, userInfo: [NSLocalizedDescriptionKey: "User cancelled login."]))
-                   } else if let result = result {
-                       continuation.resume(returning: result)
-                   } else {
-                       continuation.resume(throwing: NSError(domain: "FacebookLoginError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Unknown login error."]))
-                   }
-               }
-           }
-           
-           // Extract the token and sign in with Firebase
-           guard let tokenString = result.token?.tokenString else {
-               throw NSError(domain: "FacebookLoginError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to get Facebook access token."])
-           }
-           
-           let credential = FacebookAuthProvider.credential(withAccessToken: tokenString)
-           try await Auth.auth().signIn(with: credential)
-       }
+            let helper = SignInFacebookHelper()
+            let tokens = try await helper.signIn()
+            try await AuthenticationManager.shared.signInWithFacebook(tokens: tokens)
+        }
 }
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()

@@ -118,8 +118,11 @@ extension AuthenticationManager {
         let credential = GoogleAuthProvider.credential(withIDToken: tokens.idToken, accessToken: tokens.accessToken)
         return try await signIn(credential: credential)
     }
-    
-
+    @discardableResult
+        func signInWithFacebook(tokens: FacebookSignInResultModel) async throws -> AuthDataResultModel {
+            let credential = FacebookAuthProvider.credential(withAccessToken: tokens.accessToken)
+            return try await signIn(credential: credential)
+        }
     func signIn(credential: AuthCredential) async throws -> AuthDataResultModel {
         let authDataResult = try await Auth.auth().signIn(with: credential)
         return AuthDataResultModel(user: authDataResult.user)
