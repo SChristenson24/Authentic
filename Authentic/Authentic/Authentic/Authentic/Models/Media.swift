@@ -11,51 +11,59 @@ enum MediaTypes: String {
     case image = "Image"
     case video = "Video"
     case sound = "Sound"
-    case effect = "Effect"
 }
 
-import Foundation
-
-class Media {
+struct Media {
     var mediaID: String
     var mediaType: MediaTypes
-    var duration: TimeInterval?
+    var duration: TimeInterval? {
+        return mediaType == .video || mediaType == .sound ? _duration : nil
+    }
+    private var _duration: TimeInterval?
     var title: String?
     var userID: String?
-    var fileURL: URL? 
-
+    var fileURL: URL?
+    
     init(mediaID: String, mediaType: MediaTypes, duration: TimeInterval? = nil, title: String? = nil, userID: String? = nil, fileURL: URL? = nil) {
         self.mediaID = mediaID
         self.mediaType = mediaType
-        self.duration = duration
+        self._duration = duration
         self.title = title
         self.userID = userID
         self.fileURL = fileURL
     }
-
+    
     func toDict() -> [String: Any] {
-        return [
+        var dict: [String: Any] = [
             "mediaID": mediaID,
             "mediaType": mediaType.rawValue,
-            "duration": duration ?? NSNull(),
             "title": title ?? NSNull(),
             "userID": userID ?? NSNull(),
             "fileURL": fileURL?.absoluteString ?? NSNull()
         ]
+        if let duration = _duration {
+            dict["duration"] = duration
+        }
+        return dict
     }
-
-    static func fromDict(_ dict: [String: Any]) -> Media? {
+    
+    static func fromDict(_ dict: [String: Any]) throws -> Media {
         guard let mediaID = dict["mediaID"] as? String,
               let mediaTypeString = dict["mediaType"] as? String,
               let mediaType = MediaTypes(rawValue: mediaTypeString) else {
-            return nil
+            throw MediaError.invalidData
         }
         let duration = dict["duration"] as? TimeInterval
         let title = dict["title"] as? String
         let userID = dict["userID"] as? String
         let fileURLString = dict["fileURL"] as? String
-        let fileURL = fileURLString != nil ? URL(string: fileURLString!) : nil
-
+        let fileURL = fileURLString.flatMap { URL(string: $0) }
+        
         return Media(mediaID: mediaID, mediaType: mediaType, duration: duration, title: title, userID: userID, fileURL: fileURL)
     }
+    
+    enum MediaError: Error {
+        case invalidData
+    }
+    
 }

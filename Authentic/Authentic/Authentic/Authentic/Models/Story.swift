@@ -6,45 +6,108 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
-class Story: Post {
-    var duration: TimeInterval
+struct Story {
+    var storyID: String
+    var userID: String
+    var media: [Media]
+    var timestamp: Date
+    var expirationDate: Date
+    var visibility: PostVisibility  // Uses PostVisibility enum
+
     var isExpired: Bool {
-        return checkExpiration()
+        return Date() > expirationDate
     }
-    var reactions: [String]
 
-    init(postID: String, userID: String, media: [Media],
-             caption: String, comments: [Comment], likes: Int,
-             shares: Int = 0, impressions: Int = 0,
-             tags: [String], timestamp: Date,
-             duration: TimeInterval, reactions: [String] = []) {
-            self.duration = duration
-            self.reactions = reactions
-            
-            super.init(postID: postID, userID: userID, media: media, caption: caption,
-                       comments: comments, likes: likes, shares: shares, impressions: impressions,
-                       tags: tags, timestamp: timestamp)
+    init(storyID: String, userID: String, media: [Media], timestamp: Date, expirationDuration: TimeInterval = 24 * 3600, visibility: PostVisibility = .public) {
+        self.storyID = storyID
+        self.userID = userID
+        self.media = media
+        self.timestamp = timestamp
+        self.expirationDate = timestamp.addingTimeInterval(expirationDuration)
+        self.visibility = visibility
+    }
+
+    // MARK: - Media Manipulation Methods
+
+    // Add a media item to the array
+    mutating func addMedia(_ newMedia: Media) {
+        media.append(newMedia)
+    }
+
+    // Remove a media item by its index
+    mutating func removeMedia(at index: Int) {
+        guard index >= 0 && index < media.count else { return }
+        media.remove(at: index)
+    }
+
+    // Remove a media item by its ID
+    mutating func removeMedia(byID mediaID: String) {
+        media.removeAll { $0.mediaID == mediaID }
+    }
+
+    // Replace a media item at a specific index with new media
+    mutating func replaceMedia(at index: Int, with newMedia: Media) {
+        guard index >= 0 && index < media.count else { return }
+        media[index] = newMedia
+    }
+
+    // Clear all media from the story
+    mutating func clearMedia() {
+        media.removeAll()
+    }
+
+    // MARK: - Edit Story Properties
+
+    // Edit visibility
+    mutating func editVisibility(_ newVisibility: PostVisibility) {
+        visibility = newVisibility
+    }
+
+    // Extend expiration by adding more time
+    mutating func extendExpiration(by additionalTime: TimeInterval) {
+        expirationDate = expirationDate.addingTimeInterval(additionalTime)
+    }
+
+    // MARK: - Firestore Serialization
+
+    func toDict() -> [String: Any] {
+        return [
+            "storyID": storyID,
+            "userID": userID,
+            "media": media.map { $0.toDict() },
+            "timestamp": Timestamp(date: timestamp),
+            "expirationDate": Timestamp(date: expirationDate),
+            "visibility": visibility.rawValue
+        ]
+    }
+
+    static func fromDict(_ dict: [String: Any]) throws -> Story {
+        guard let storyID = dict["storyID"] as? String,
+              let userID = dict["userID"] as? String,
+              let mediaDicts = dict["media"] as? [[String: Any]],
+              let timestamp = (dict["timestamp"] as? Timestamp)?.dateValue(),
+              let expirationDate = (dict["expirationDate"] as? Timestamp)?.dateValue(),
+              let visibilityString = dict["visibility"] as? String,
+              let visibility = PostVisibility(rawValue: visibilityString)
+        else {
+            throw StoryError.invalidData
         }
 
-    func checkExpiration() -> Bool {
-        let currentTime = Date()
-        return currentTime > timestamp.addingTimeInterval(duration)
+        let media = try mediaDicts.map { try Media.fromDict($0) }
+
+        return Story(
+            storyID: storyID,
+            userID: userID,
+            media: media,
+            timestamp: timestamp,
+            expirationDuration: expirationDate.timeIntervalSince(timestamp),
+            visibility: visibility
+        )
     }
 
-    func react(to reaction: String) {
-        reactions.append(reaction)
+    enum StoryError: Error {
+        case invalidData
     }
-    
-    override func toDict() -> [String: Any] {
-            var dict = super.toDict()
-            dict["duration"] = duration
-            dict["reactions"] = reactions
-            return dict
-        }
-
-    // at later date implement override for fromDict(), it keeps returning errors when implementing
-
 }
-
-
