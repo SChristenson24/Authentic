@@ -8,11 +8,23 @@
 import SwiftUI
 import FirebaseAuth
 import FBSDKLoginKit
+import CryptoKit
+import AuthenticationServices
 
 
+public struct SignInWithAppleResult{
+    let token: String
+    let nonce: String
+    
+}
 
 @MainActor
-final class LoginViewModel: ObservableObject{
+final class LoginViewModel: NSObject, ObservableObject{
+    private var currentNonce: String?
+    public var didSignInWithApple: Bool = false
+    
+   
+    
     func singInGoogle() async throws{
        
         let helper = SignInGoogleHelper()
@@ -25,7 +37,98 @@ final class LoginViewModel: ObservableObject{
             let tokens = try await helper.signIn()
             try await AuthenticationManager.shared.signInWithFacebook(tokens: tokens)
         }
+    func signInApple() async throws{
+        startSignInWithAppleFlow()
+    }
+    
+    func startSignInWithAppleFlow() {
+        guard let TopVC = Utilities.shared.topViewController() else {
+            return
+        }
+      let nonce = randomNonceString()
+      currentNonce = nonce
+      let appleIDProvider = ASAuthorizationAppleIDProvider()
+      let request = appleIDProvider.createRequest()
+      request.requestedScopes = [.fullName, .email]
+      request.nonce = sha256(nonce)
+
+      let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+      authorizationController.delegate = self
+      authorizationController.presentationContextProvider = TopVC
+      authorizationController.performRequests()
+    }
+    
+    private func randomNonceString(length: Int = 32) -> String {
+      precondition(length > 0)
+      var randomBytes = [UInt8](repeating: 0, count: length)
+      let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
+      if errorCode != errSecSuccess {
+        fatalError(
+          "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+        )
+      }
+
+      let charset: [Character] =
+        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+
+      let nonce = randomBytes.map { byte in
+        // Pick a random character from the set, wrapping around if needed.
+        charset[Int(byte) % charset.count]
+      }
+
+      return String(nonce)
+    }
+    
+    @available(iOS 13, *)
+    private func sha256(_ input: String) -> String {
+      let inputData = Data(input.utf8)
+      let hashedData = SHA256.hash(data: inputData)
+      let hashString = hashedData.compactMap {
+        String(format: "%02x", $0)
+      }.joined()
+
+      return hashString
+    }
 }
+
+extension LoginViewModel: ASAuthorizationControllerDelegate {
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        guard
+            let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+            let appleIDToken = appleIDCredential.identityToken,
+            let idTokenString = String(data: appleIDToken, encoding: .utf8),
+                let nonce = currentNonce
+        else {
+            print("error")
+            return
+        }
+        
+        let tokens = SignInWithAppleResult(token: idTokenString, nonce: nonce)
+    
+    Task {
+        do {
+            try await AuthenticationManager.shared.signInWithApple(tokens: tokens)
+            didSignInWithApple = true
+        } catch {
+            print("Sign in with apple failed: \(error.localizedDescription)")
+        }
+    }
+}
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        // Handle error.
+        print("Sign in with Apple errored: \(error)")
+    }
+    
+}
+
+extension UIViewController: ASAuthorizationControllerPresentationContextProviding{
+    public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+}
+
+
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
     @State private var email: String = ""
@@ -129,7 +232,14 @@ struct LoginView: View {
                                 .padding(.bottom, 10)
                         }
                         Button(action: {
-                            // do smtn here
+                            Task {
+                                do {
+                                    try await viewModel.signInApple()
+                                    isLoggedIn = true
+                                } catch {
+                                    print(error)
+                                }
+                            }
                         }){
                             Image("appleicon")
                                 .resizable()
