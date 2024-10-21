@@ -17,12 +17,12 @@ struct ProfileInformationView: View {
                 // MARK: Custom Back Button (White Arrow)
                 HStack {
                     Button(action: {
-                        presentationMode.wrappedValue.dismiss() // Navigate back
+                        presentationMode.wrappedValue.dismiss()
                     }) {
                         Image(systemName: "arrow.left")
-                            .foregroundColor(.white) // White arrow color
-                            .font(.system(size: 24, weight: .bold)) // Customize arrow size and weight
-                            .padding(.leading, 16) // Add padding to align the arrow properly
+                            .foregroundColor(.white)
+                            .font(.system(size: 24, weight: .bold))
+                            .padding(.leading, 16)
                     }
                     Spacer()
                 }
@@ -83,6 +83,7 @@ struct ProfileInformationView: View {
                             .cornerRadius(25)
                             .padding(.horizontal, 20)
                             .datePickerStyle(WheelDatePickerStyle())
+                            .padding(.bottom, -30)
                     }
 
                     // MARK: Error Message Styling
@@ -106,6 +107,7 @@ struct ProfileInformationView: View {
                             .background(Color("bpink"))
                             .cornerRadius(25)
                             .padding(.horizontal, 80)
+                            .padding(.bottom, 20)
                     }
                     .padding(.bottom, 20)
                 }

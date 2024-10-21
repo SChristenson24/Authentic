@@ -14,7 +14,6 @@ struct SignUpView: View {
                 Color("lpink").edgesIgnoringSafeArea(.all)
                 
                 VStack {
-                    // Keep the image for SignUpView as it was before
                     Image("stat")
                         .resizable()
                         .scaledToFit()
@@ -115,7 +114,7 @@ struct SignUpView: View {
                                 .foregroundColor(Color("bpink"))
                                 .font(.custom("Lexend-Regular", size: 14))
                                 .multilineTextAlignment(.center)
-                                .padding(.horizontal, 20) // Add padding to avoid edge overlap
+                                .padding(.horizontal, 20)
                         }
                         
                         Button(action: {
@@ -132,7 +131,6 @@ struct SignUpView: View {
                         .padding(.horizontal, 80)
                         .padding(.bottom, 10)
 
-                        // "Already have an account?" section
                         HStack {
                             Text("Already have an account?")
                                 .font(.custom("Lexend-Light", size: 14))
@@ -145,17 +143,16 @@ struct SignUpView: View {
                                     .foregroundColor(Color("bpink"))
                             }
                         }
-                        .padding(.top, 10) // Adjust padding to move closer to the button
-                        .padding(.bottom, 30) // More reasonable bottom spacing compared to before
+                        .padding(.top, 10)
+                        .padding(.bottom, 30)
                         
-                        Spacer() // Use this only at the end of the VStack to avoid pushing down the content
+                        Spacer()
                     }
                     .background(Color.white)
                     .cornerRadius(35)
                     .edgesIgnoringSafeArea(.bottom)
                     .shadow(radius: 5)
                 }
-                // Navigation to ProfileInformationView when navToProfileInfo is true
                 .navigationDestination(isPresented: $navToProfileInfo) {
                     ProfileInformationView()
                 }
@@ -163,14 +160,13 @@ struct SignUpView: View {
         }
     }
     
-    // Function to validate the sign-up data
     func validateSignUpData() {
         errorMessage = ""
         
         if email.isEmpty || password.isEmpty {
             errorMessage = "All fields are required. Please enter your email and password."
         } else {
-            navToProfileInfo = true // Navigate to ProfileInformationView
+            navToProfileInfo = true
         }
     }
 }
