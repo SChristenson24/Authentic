@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct LoginView: View {
+    // MARK: User Details
     @State private var email: String = ""
     @State private var password: String = ""
-    @State private var showingSignUp = false
+    // MARK: View Properties
+    @State var showingSignUp: Bool = false
+    @State var showError: Bool = false
+    @State var errorMessage: String = ""
+    
 
     var body: some View {
         ZStack(alignment: .top) {

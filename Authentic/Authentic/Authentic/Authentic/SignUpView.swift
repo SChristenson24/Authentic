@@ -45,15 +45,15 @@ struct SignUpView: View {
                     
                     Text("Sign Up")
                         .font(.custom("Lexend-Bold", size: 35))
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 30)
                         .padding(.top, 50)
                         .foregroundColor(Color("darkgray"))
                         .padding(.trailing, 180)
                     
                     Text("Email")
-                        .font(.custom("Lexend-Thin", size: 16))
+                        .font(.custom("Lexend-Thin", size: 14))
                         .padding(.top, -10)
-                        .padding(.bottom, 15)
+                        .padding(.bottom, 1)
                         .padding(.trailing, 270)
                         .foregroundColor(Color.gray)
                     
@@ -73,10 +73,10 @@ struct SignUpView: View {
 
                     
                     Text("Password")
-                        .font(.custom("Lexend-Thin", size: 16))
+                        .font(.custom("Lexend-Thin", size: 14))
                         .padding(.top, 25)
-                        .padding(.bottom, 15)
-                        .padding(.trailing, 250)
+                        .padding(.bottom, 1)
+                        .padding(.trailing, 235)
                         .foregroundColor(Color.gray)
                     
                     HStack{
@@ -92,7 +92,7 @@ struct SignUpView: View {
                         .cornerRadius(25)
                         .shadow(radius: 1)
                         .padding(.horizontal, 45)
-                        .padding(.bottom, 30)
+                        .padding(.bottom, 20)
                     
                     HStack(spacing: 30) {
                         Button(action: {
@@ -101,7 +101,7 @@ struct SignUpView: View {
                             Image("fbicon")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 60, height: 60)
+                                .frame(width: 45, height: 45)
                                 .clipShape(Circle())
                                 .shadow(radius: 2)
                                 .padding(.bottom, 10)
@@ -112,7 +112,7 @@ struct SignUpView: View {
                             Image("appleicon")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 50, height: 50)
+                                .frame(width: 35, height: 35)
                                 .clipShape(Circle())
                                 .shadow(radius: 2)
                                 .padding(.bottom, 10)
@@ -124,7 +124,7 @@ struct SignUpView: View {
                             Image("googleicon")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 50, height: 50)
+                                .frame(width: 35, height: 35)
                                 .clipShape(Circle())
                                 .shadow(radius: 2)
                                 .padding(.bottom, 10)
@@ -135,7 +135,7 @@ struct SignUpView: View {
                     Button("Next") {
                                     
                                 }
-
+                    .font(.custom("Lexend-Regular", size: 16))
                     .padding()
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
@@ -145,11 +145,13 @@ struct SignUpView: View {
                     
                     HStack {
                         Text("Already have an account?")
+                            .font(.custom("Lexend-Thin", size: 14))
+                            .foregroundColor(Color.gray)
                         Button(action: {
                             showingLogin.toggle()
                         }) {
-                            Text("Sign in")
-                                .fontWeight(.semibold)
+                            Text("Log in")
+                                .font(.custom("Lexend-SemiBold", size: 14))
                                 .foregroundColor(Color("bpink"))
                         }
                     }
