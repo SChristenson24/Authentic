@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ProfileInformationView: View {
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) var presentationMode // To handle back navigation
     @State private var firstName: String = ""
     @State private var lastName: String = ""
     @State private var username: String = ""
@@ -14,11 +14,22 @@ struct ProfileInformationView: View {
             Color("lpink").edgesIgnoringSafeArea(.all)
             // MARK: White Field Container
             VStack {
-
-
+                // MARK: Custom Back Button (White Arrow)
+                HStack {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss() // Navigate back
+                    }) {
+                        Image(systemName: "arrow.left")
+                            .foregroundColor(.white) // White arrow color
+                            .font(.system(size: 24, weight: .bold)) // Customize arrow size and weight
+                            .padding(.leading, 16) // Add padding to align the arrow properly
+                    }
+                    Spacer()
+                }
+                
                 Text("Complete Your Profile")
                     .font(.custom("Lexend-Bold", size: 24))
-                    .padding(.top, 40)
+                    .padding(.top, 20)
                     .padding(.bottom, 20)
                     .foregroundColor(Color("darkgray"))
                 
@@ -106,6 +117,7 @@ struct ProfileInformationView: View {
                 .edgesIgnoringSafeArea(.bottom)
             }
         }
+        .navigationBarBackButtonHidden(true) // Hide default back button
     }
     
     // MARK: Profile Function

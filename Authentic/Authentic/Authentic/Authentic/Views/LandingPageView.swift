@@ -78,7 +78,6 @@ struct LandingPageView: View {
         .onAppear {
             _ = self.timer
         }
-        // Full-screen modal for SignUp and LogIn views
         .fullScreenCover(isPresented: $isPresented) {
             ZStack {
                 if isShowingSignup {

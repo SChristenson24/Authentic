@@ -30,7 +30,7 @@ struct LoginView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(height: 350)
-                    .padding(.bottom, -150)
+                    .padding(.bottom, -140)
                     .edgesIgnoringSafeArea(.bottom)
                 
                 VStack {
@@ -90,7 +90,7 @@ struct LoginView: View {
                         .font(.custom("Lexend-Regular", size: 12))
                         .foregroundColor(Color("bpink"))
                         .padding(.top, -20)
-                        .padding(.bottom, 10)
+                       // .padding(.bottom, 10)
                         .padding(.leading, 175)
                     
                     HStack(spacing: 30) {
@@ -130,16 +130,19 @@ struct LoginView: View {
                         }
                     }
                     
-                    Button("Log In") {
-                        // Handle the login logic here
+                    Button(action: {
+                        //validateSignUpData()
+                    }) {
+                        Text("Log In")
+                            .font(.custom("Lexend-Regular", size: 16))
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color("bpink"))
+                            .cornerRadius(25)
                     }
-                    .font(.custom("Lexend-Regular", size: 16))
-                    .padding()
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .background(Color("lpink"))
-                    .cornerRadius(25)
                     .padding(.horizontal, 80)
+                    .padding(.bottom, 10)
 
                     HStack {
                         Text("Don't have an account?")
@@ -153,8 +156,8 @@ struct LoginView: View {
                                 .foregroundColor(Color("bpink"))
                         }
                     }
-                    .padding(.top, 50)
-                    .padding(.bottom, 60)
+                    .padding(.top, 10)
+                    .padding(.bottom, 30)
                     
                     Spacer()
                 }

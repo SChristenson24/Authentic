@@ -14,7 +14,7 @@ struct SignUpView: View {
                 Color("lpink").edgesIgnoringSafeArea(.all)
                 
                 VStack {
-                    
+                    // Keep the image for SignUpView as it was before
                     Image("stat")
                         .resizable()
                         .scaledToFit()
@@ -28,7 +28,7 @@ struct SignUpView: View {
                             .padding(.bottom, 30)
                             .padding(.top, 50)
                             .foregroundColor(Color("darkgray"))
-                            .padding(.trailing, 180)
+                            .padding(.trailing, 200)
                         
                         Text("Email")
                             .font(.custom("Lexend-Light", size: 14))
@@ -58,7 +58,7 @@ struct SignUpView: View {
                             .padding(.trailing, 235)
                             .foregroundColor(Color.gray)
                         
-                        HStack{
+                        HStack {
                             Image(systemName: "key.fill")
                                 .foregroundColor(.gray)
                                 .padding(.leading, 2)
@@ -71,7 +71,7 @@ struct SignUpView: View {
                         .cornerRadius(25)
                         .shadow(radius: 1)
                         .padding(.horizontal, 45)
-                        .padding(.bottom, 30)
+                        .padding(.bottom, 20)
                         
                         HStack(spacing: 30) {
                             Button(action: {
@@ -110,18 +110,16 @@ struct SignUpView: View {
                             }
                         }
                         
-                        // MARK: Error Message Styling
-                        Text(errorMessage.isEmpty ? " " : errorMessage)
-                            .foregroundColor(Color("bpink"))
-                            .font(.custom("Lexend-Regular", size: 14))
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 20)
-                            .fixedSize(horizontal: false, vertical: true) 
-                            .opacity(errorMessage.isEmpty ? 0 : 1)
+                        if !errorMessage.isEmpty {
+                            Text(errorMessage)
+                                .foregroundColor(Color("bpink"))
+                                .font(.custom("Lexend-Regular", size: 14))
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 20) // Add padding to avoid edge overlap
+                        }
                         
-                        // The Full-Width Clickable Button "Next"
                         Button(action: {
-                            validateSignUpData() // Call validation before navigating
+                            validateSignUpData()
                         }) {
                             Text("Next")
                                 .font(.custom("Lexend-Regular", size: 16))
@@ -132,8 +130,9 @@ struct SignUpView: View {
                                 .cornerRadius(25)
                         }
                         .padding(.horizontal, 80)
-                        .padding(.bottom, 30)
-                        
+                        .padding(.bottom, 10)
+
+                        // "Already have an account?" section
                         HStack {
                             Text("Already have an account?")
                                 .font(.custom("Lexend-Light", size: 14))
@@ -146,22 +145,22 @@ struct SignUpView: View {
                                     .foregroundColor(Color("bpink"))
                             }
                         }
-                        .padding(.top, 50)
-                        .padding(.bottom, 60)
+                        .padding(.top, 10) // Adjust padding to move closer to the button
+                        .padding(.bottom, 30) // More reasonable bottom spacing compared to before
                         
-                        Spacer()
+                        Spacer() // Use this only at the end of the VStack to avoid pushing down the content
                     }
                     .background(Color.white)
                     .cornerRadius(35)
                     .edgesIgnoringSafeArea(.bottom)
                     .shadow(radius: 5)
                 }
-            }
-            .navigationDestination(isPresented: $navToProfileInfo) {
-                ProfileInformationView()
+                // Navigation to ProfileInformationView when navToProfileInfo is true
+                .navigationDestination(isPresented: $navToProfileInfo) {
+                    ProfileInformationView()
+                }
             }
         }
-        .navigationBarBackButtonHidden(true)
     }
     
     // Function to validate the sign-up data
