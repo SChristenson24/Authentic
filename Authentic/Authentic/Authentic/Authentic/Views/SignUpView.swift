@@ -15,6 +15,7 @@ struct SignUpView: View {
     @State private var password: String = ""
     // MARK: View Properties
     @Binding var isShowingSignup: Bool
+    //@Binding var isShowingLogin: Bool
     @State private var alertMessage: String? = nil
     @State private var showAlert: Bool = false
 
@@ -82,7 +83,7 @@ struct SignUpView: View {
                         .cornerRadius(25)
                         .shadow(radius: 1)
                         .padding(.horizontal, 45)
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 30)
                     
                     HStack(spacing: 30) {
                         Button(action: {
@@ -134,16 +135,16 @@ struct SignUpView: View {
                     .padding(.horizontal, 80)
                     
                     HStack {
-                        Text("Already have an account?")
-                            .font(.custom("Lexend-Light", size: 14))
-                            .foregroundColor(Color.gray)
-                        Button(action: {
-                            isShowingSignup.toggle()
-                        }) {
-                            Text("Log in")
-                                .font(.custom("Lexend-SemiBold", size: 14))
-                                .foregroundColor(Color("bpink"))
-                        }
+                         Text("Already have an account?")
+                             .font(.custom("Lexend-Light", size: 14))
+                             .foregroundColor(Color.gray)
+                         Button(action: {
+                             isShowingSignup = false
+                         }) {
+                             Text("Log In")
+                                 .font(.custom("Lexend-SemiBold", size: 14))
+                                 .foregroundColor(Color("bpink"))
+                         }
                     }
                     .padding(.top, 50) 
                     .padding(.bottom, 60)
@@ -161,9 +162,7 @@ struct SignUpView: View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView(isShowingSignup: .constant(false))
-            .previewDevice(PreviewDevice(rawValue: "iPhone 15"))
-            .previewDisplayName("iPhone 15")
+        SignUpView(isShowingSignup: .constant(true)) 
     }
 }
 

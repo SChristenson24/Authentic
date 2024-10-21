@@ -18,7 +18,8 @@ struct LoginView: View {
     @State var createAccount: Bool = false
     @State var showError: Bool = false
     @State var errorMessage: String = ""
-    @State private var isShowingSignup = false
+    @Binding var isShowingSignup: Bool
+   // @Binding var isShowingLogin: Bool
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -145,7 +146,7 @@ struct LoginView: View {
                             .font(.custom("Lexend-Light", size: 14))
                             .foregroundColor(Color.gray)
                         Button(action: {
-                            isShowingSignup.toggle()
+                            isShowingSignup = true
                         }) {
                             Text("Sign Up")
                                 .font(.custom("Lexend-SemiBold", size: 14))
@@ -168,10 +169,9 @@ struct LoginView: View {
         }
     }
 }
-
-struct LoginView_Previews: PreviewProvider {
+struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(isShowingSignup: .constant(false))
     }
 }
 

@@ -3,7 +3,8 @@ import SwiftUI
 
 
 struct LandingPageView: View {
-    @State private var showingSignUp = false
+    @State private var isShowingSignup = false
+    @State private var isPresented = false
     
     private let quotes = [
         "Your space for real connections, real stories, and real empowerment. Be you, be Authentic.",
@@ -19,7 +20,7 @@ struct LandingPageView: View {
     var body: some View {
         ZStack {
             Color("lpink").edgesIgnoringSafeArea(.all)
-            
+    
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
@@ -46,6 +47,9 @@ struct LandingPageView: View {
                 TabView(selection: $currentQuoteIndex) {
                     ForEach(0..<quotes.count, id: \.self) { index in
                         Text(self.quotes[index])
+                            .font(.custom("Lexend-Light", size: 14))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(Color("darkgray"))
                             .tabItem { EmptyView() }
                             .tag(index)
                     }
@@ -59,15 +63,16 @@ struct LandingPageView: View {
                 }
                 
                 Button(action: {
-                    showingSignUp.toggle()
+                    isPresented = true
                 }) {
                     Text("Get Started")
-                        .foregroundColor(.white)
+                        .font(.custom("Lexend-Regular", size: 16))
                         .padding()
+                        .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
-                        .background(Color("lighterpink"))
+                        .background(Color("bpink"))
                         .cornerRadius(25)
-                        .padding(.horizontal, 50)
+                        .padding(.horizontal, 80)
                 }
                 Spacer()
             }
@@ -75,9 +80,12 @@ struct LandingPageView: View {
         .onAppear {
             _ = self.timer
         }
-        
-        .fullScreenCover(isPresented: $showingSignUp) {
-           // SignUpView()
+        .fullScreenCover(isPresented: $isPresented) {
+                    if isShowingSignup {
+                        SignUpView(isShowingSignup: $isShowingSignup)
+                    } else {
+                        LoginView(isShowingSignup: $isShowingSignup)
+                    }
         }
     }
 }
