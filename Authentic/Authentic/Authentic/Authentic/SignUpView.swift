@@ -50,7 +50,7 @@ struct SignUpView: View {
                         .padding(.trailing, 180)
                     
                     Text("Email")
-                        .font(.custom("Lexend-Thin", size: 14))
+                        .font(.custom("Lexend-Light", size: 14))
                         .padding(.top, -10)
                         .padding(.bottom, 1)
                         .padding(.trailing, 270)
@@ -72,7 +72,7 @@ struct SignUpView: View {
 
                     
                     Text("Password")
-                        .font(.custom("Lexend-Thin", size: 14))
+                        .font(.custom("Lexend-Light", size: 14))
                         .padding(.top, 25)
                         .padding(.bottom, 1)
                         .padding(.trailing, 235)
@@ -86,6 +86,7 @@ struct SignUpView: View {
                         SecureField("", text: $password)
                             .padding(.leading, 10)
                     }
+                    
                         .padding()
                         .background(Color("lightgray"))
                         .cornerRadius(25)
@@ -144,7 +145,7 @@ struct SignUpView: View {
                     
                     HStack {
                         Text("Already have an account?")
-                            .font(.custom("Lexend-Thin", size: 14))
+                            .font(.custom("Lexend-Light", size: 14))
                             .foregroundColor(Color.gray)
                         Button(action: {
                             showingLogin.toggle()

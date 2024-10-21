@@ -39,7 +39,7 @@ struct LoginView: View {
                         .padding(.trailing, 180)
                     
                     Text("Email")
-                        .font(.custom("Lexend-Thin", size: 14))
+                        .font(.custom("Lexend-Light", size: 14))
                         .padding(.top, -10)
                         .padding(.bottom, 1)
                         .padding(.trailing, 270)
@@ -61,7 +61,7 @@ struct LoginView: View {
 
                     
                     Text("Password")
-                        .font(.custom("Lexend-Thin", size: 14))
+                        .font(.custom("Lexend-Light", size: 14))
                         .padding(.top, 25)
                         .padding(.bottom, 1)
                         .padding(.trailing, 235)
@@ -81,6 +81,13 @@ struct LoginView: View {
                         .shadow(radius: 1)
                         .padding(.horizontal, 45)
                         .padding(.bottom, 20)
+                    
+                    Button("Reset password?", action: {})
+                        .font(.custom("Lexend-Regular", size: 12))
+                        .foregroundColor(Color("bpink"))
+                        .padding(.top, -20)
+                        .padding(.bottom, 10)
+                        .padding(.leading, 175)
                     
                     HStack(spacing: 30) {
                         Button(action: {
@@ -132,7 +139,7 @@ struct LoginView: View {
 
                     HStack {
                         Text("Don't have an account?")
-                            .font(.custom("Lexend-Thin", size: 14))
+                            .font(.custom("Lexend-Light", size: 14))
                             .foregroundColor(Color.gray)
                         Button(action: {
                             showingSignUp.toggle()
