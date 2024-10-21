@@ -1,9 +1,7 @@
 import SwiftUI
 
-
-
 struct LandingPageView: View {
-    @State private var isShowingSignup = false
+    @State private var isShowingSignup = true
     @State private var isPresented = false
     
     private let quotes = [
@@ -63,7 +61,7 @@ struct LandingPageView: View {
                 }
                 
                 Button(action: {
-                    isPresented = true
+                    isPresented.toggle()
                 }) {
                     Text("Get Started")
                         .font(.custom("Lexend-Regular", size: 16))
@@ -80,12 +78,18 @@ struct LandingPageView: View {
         .onAppear {
             _ = self.timer
         }
+        // Full-screen modal for SignUp and LogIn views
         .fullScreenCover(isPresented: $isPresented) {
-                    if isShowingSignup {
-                        SignUpView(isShowingSignup: $isShowingSignup)
-                    } else {
-                        LoginView(isShowingSignup: $isShowingSignup)
-                    }
+            ZStack {
+                if isShowingSignup {
+                    SignUpView(isShowingSignup: $isShowingSignup)
+                        .transition(.move(edge: .trailing)) // Transition from right
+                } else {
+                    LoginView(isShowingSignup: $isShowingSignup)
+                        .transition(.move(edge: .leading))  // Transition from left
+                }
+            }
+            .animation(.easeInOut, value: isShowingSignup) // Add animation for transitions
         }
     }
 }

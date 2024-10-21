@@ -164,9 +164,6 @@ struct LoginView: View {
                 .shadow(radius: 5)
             }
         }
-        .fullScreenCover(isPresented: $isShowingSignup) {
-            SignUpView(isShowingSignup: $isShowingSignup)
-        }
     }
 }
 struct LogInView_Previews: PreviewProvider {
