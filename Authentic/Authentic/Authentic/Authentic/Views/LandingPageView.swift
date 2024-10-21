@@ -83,13 +83,13 @@ struct LandingPageView: View {
             ZStack {
                 if isShowingSignup {
                     SignUpView(isShowingSignup: $isShowingSignup)
-                        .transition(.move(edge: .trailing)) // Transition from right
+                        .transition(.move(edge: .trailing))
                 } else {
                     LoginView(isShowingSignup: $isShowingSignup)
-                        .transition(.move(edge: .leading))  // Transition from left
+                        .transition(.move(edge: .leading))
                 }
             }
-            .animation(.easeInOut, value: isShowingSignup) // Add animation for transitions
+            .animation(.easeInOut, value: isShowingSignup)
         }
     }
 }

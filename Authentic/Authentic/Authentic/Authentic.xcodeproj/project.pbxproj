@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1D1664FB2CC6FF3300DCC752 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D1664FA2CC6FF3300DCC752 /* GoogleService-Info.plist */; };
+		1D1664FD2CC7054400DCC752 /* ProfileInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1664FC2CC7054400DCC752 /* ProfileInformationView.swift */; };
 		214E07182B91905700208E20 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E07172B91905700208E20 /* SignUpView.swift */; };
 		214E071A2B91909900208E20 /* LandingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E07192B91909900208E20 /* LandingPageView.swift */; };
 		214E071C2B9191E500208E20 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E071B2B9191E500208E20 /* LogInView.swift */; };
@@ -72,6 +73,7 @@
 
 /* Begin PBXFileReference section */
 		1D1664FA2CC6FF3300DCC752 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		1D1664FC2CC7054400DCC752 /* ProfileInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInformationView.swift; sourceTree = "<group>"; };
 		214E07172B91905700208E20 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		214E07192B91909900208E20 /* LandingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageView.swift; sourceTree = "<group>"; };
 		214E071B2B9191E500208E20 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				214E07192B91909900208E20 /* LandingPageView.swift */,
 				214E071B2B9191E500208E20 /* LogInView.swift */,
 				214E07172B91905700208E20 /* SignUpView.swift */,
+				1D1664FC2CC7054400DCC752 /* ProfileInformationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 				2155DC212B901CF8007D6E3A /* Persistence.swift in Sources */,
 				214E071C2B9191E500208E20 /* LogInView.swift in Sources */,
 				214E071A2B91909900208E20 /* LandingPageView.swift in Sources */,
+				1D1664FD2CC7054400DCC752 /* ProfileInformationView.swift in Sources */,
 				214E07182B91905700208E20 /* SignUpView.swift in Sources */,
 				2155DC182B901CF6007D6E3A /* AuthenticApp.swift in Sources */,
 				2155DC242B901CF8007D6E3A /* Authentic.xcdatamodeld in Sources */,
