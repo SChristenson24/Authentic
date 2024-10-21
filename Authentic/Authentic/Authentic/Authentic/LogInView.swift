@@ -36,7 +36,7 @@ struct LoginView: View {
                         .padding(.bottom, 30)
                         .padding(.top, 50)
                         .foregroundColor(Color("darkgray"))
-                        .padding(.trailing, 180)
+                        .padding(.trailing, 200)
                     
                     Text("Email")
                         .font(.custom("Lexend-Light", size: 14))
