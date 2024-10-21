@@ -146,6 +146,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D1664F72CC6D8B100DCC752 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				214E07192B91909900208E20 /* LandingPageView.swift */,
+				214E071B2B9191E500208E20 /* LogInView.swift */,
+				214E07172B91905700208E20 /* SignUpView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		2155DC0B2B901CF6007D6E3A = {
 			isa = PBXGroup;
 			children = (
@@ -176,10 +186,8 @@
 				2155DC202B901CF8007D6E3A /* Persistence.swift */,
 				2155DC222B901CF8007D6E3A /* Authentic.xcdatamodeld */,
 				2155DC1D2B901CF8007D6E3A /* Preview Content */,
-				214E07172B91905700208E20 /* SignUpView.swift */,
+				1D1664F72CC6D8B100DCC752 /* Views */,
 				CF0B8D882C8D429D002D1966 /* GoogleService-Info.plist */,
-				214E071B2B9191E500208E20 /* LogInView.swift */,
-				214E07192B91909900208E20 /* LandingPageView.swift */,
 			);
 			path = Authentic;
 			sourceTree = "<group>";
