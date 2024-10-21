@@ -30,18 +30,18 @@ struct LoginView: View {
                     .edgesIgnoringSafeArea(.bottom)
                 
                 VStack {
-                    Spacer()
-                    
+
                     Text("Log In")
                         .font(.custom("Lexend-Bold", size: 35))
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 30)
+                        .padding(.top, 50)
                         .foregroundColor(Color("darkgray"))
                         .padding(.trailing, 180)
-
+                    
                     Text("Email")
-                        .font(.custom("Lexend-Thin", size: 16))
+                        .font(.custom("Lexend-Thin", size: 14))
                         .padding(.top, -10)
-                        .padding(.bottom, 15)
+                        .padding(.bottom, 1)
                         .padding(.trailing, 270)
                         .foregroundColor(Color.gray)
                     
@@ -58,12 +58,13 @@ struct LoginView: View {
                     .cornerRadius(25)
                     .shadow(radius: 1)
                     .padding(.horizontal, 45)
+
                     
                     Text("Password")
-                        .font(.custom("Lexend-Thin", size: 16))
+                        .font(.custom("Lexend-Thin", size: 14))
                         .padding(.top, 25)
-                        .padding(.bottom, 15)
-                        .padding(.trailing, 250)
+                        .padding(.bottom, 1)
+                        .padding(.trailing, 235)
                         .foregroundColor(Color.gray)
                     
                     HStack{
@@ -79,7 +80,7 @@ struct LoginView: View {
                         .cornerRadius(25)
                         .shadow(radius: 1)
                         .padding(.horizontal, 45)
-                        .padding(.bottom, 30)
+                        .padding(.bottom, 20)
                     
                     HStack(spacing: 30) {
                         Button(action: {
@@ -88,7 +89,7 @@ struct LoginView: View {
                             Image("fbicon")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 60, height: 60)
+                                .frame(width: 45, height: 45)
                                 .clipShape(Circle())
                                 .shadow(radius: 2)
                                 .padding(.bottom, 10)
@@ -99,7 +100,7 @@ struct LoginView: View {
                             Image("appleicon")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 50, height: 50)
+                                .frame(width: 35, height: 35)
                                 .clipShape(Circle())
                                 .shadow(radius: 2)
                                 .padding(.bottom, 10)
@@ -111,7 +112,7 @@ struct LoginView: View {
                             Image("googleicon")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 50, height: 50)
+                                .frame(width: 35, height: 35)
                                 .clipShape(Circle())
                                 .shadow(radius: 2)
                                 .padding(.bottom, 10)
@@ -121,6 +122,7 @@ struct LoginView: View {
                     Button("Log In") {
                         // Handle the login logic here
                     }
+                    .font(.custom("Lexend-Regular", size: 16))
                     .padding()
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
@@ -130,16 +132,18 @@ struct LoginView: View {
 
                     HStack {
                         Text("Don't have an account?")
+                            .font(.custom("Lexend-Thin", size: 14))
+                            .foregroundColor(Color.gray)
                         Button(action: {
                             showingSignUp.toggle()
                         }) {
                             Text("Sign Up")
-                                .fontWeight(.semibold)
+                                .font(.custom("Lexend-SemiBold", size: 14))
                                 .foregroundColor(Color("bpink"))
                         }
                     }
-                    .padding(.top, 20)
-                    .padding(.bottom, 50)
+                    .padding(.top, 50)
+                    .padding(.bottom, 60)
                     
                     Spacer()
                 }

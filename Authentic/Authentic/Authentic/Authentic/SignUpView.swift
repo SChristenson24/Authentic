@@ -38,7 +38,6 @@ struct SignUpView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(height: 350)
-                    //.padding(.top, 10)
                     .padding(.bottom, -140)
                     .edgesIgnoringSafeArea(.bottom)
                 VStack{
