@@ -22,6 +22,7 @@ struct SignUpView: View {
                         .edgesIgnoringSafeArea(.bottom)
                     
                     VStack {
+                        // MARK: Sign Up Text
                         Text("Sign Up")
                             .font(.custom("Lexend-Bold", size: 35))
                             .padding(.bottom, 30)
@@ -29,6 +30,7 @@ struct SignUpView: View {
                             .foregroundColor(Color("darkgray"))
                             .padding(.trailing, 200)
                         
+                        // MARK: Email Text
                         Text("Email")
                             .font(.custom("Lexend-Light", size: 14))
                             .padding(.top, -10)
@@ -50,6 +52,7 @@ struct SignUpView: View {
                         .shadow(radius: 1)
                         .padding(.horizontal, 45)
                         
+                        // MARK: Password Text
                         Text("Password")
                             .font(.custom("Lexend-Light", size: 14))
                             .padding(.top, 25)
@@ -72,6 +75,7 @@ struct SignUpView: View {
                         .padding(.horizontal, 45)
                         .padding(.bottom, 20)
                         
+                        // MARK: Auth Buttons
                         HStack(spacing: 30) {
                             Button(action: {
                                 // Add Facebook login logic here
@@ -109,6 +113,7 @@ struct SignUpView: View {
                             }
                         }
                         
+                        // MARK: Error Messages
                         if !errorMessage.isEmpty {
                             Text(errorMessage)
                                 .foregroundColor(Color("bpink"))
@@ -159,7 +164,7 @@ struct SignUpView: View {
             }
         }
     }
-    
+
     func validateSignUpData() {
         errorMessage = ""
         

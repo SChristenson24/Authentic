@@ -34,7 +34,7 @@ struct LoginView: View {
                     .edgesIgnoringSafeArea(.bottom)
                 
                 VStack {
-
+                    // MARK: Log In Text
                     Text("Log In")
                         .font(.custom("Lexend-Bold", size: 35))
                         .padding(.bottom, 30)
@@ -42,6 +42,7 @@ struct LoginView: View {
                         .foregroundColor(Color("darkgray"))
                         .padding(.trailing, 200)
                     
+                    // MARK: Email Text
                     Text("Email")
                         .font(.custom("Lexend-Light", size: 14))
                         .padding(.top, -10)
@@ -63,7 +64,7 @@ struct LoginView: View {
                     .shadow(radius: 1)
                     .padding(.horizontal, 45)
 
-                    
+                    // MARK: Password Text
                     Text("Password")
                         .font(.custom("Lexend-Light", size: 14))
                         .padding(.top, 25)
@@ -85,14 +86,14 @@ struct LoginView: View {
                         .shadow(radius: 1)
                         .padding(.horizontal, 45)
                         .padding(.bottom, 20)
-                    
+                    // MARK: Reset Password
                     Button("Reset password?", action: {})
                         .font(.custom("Lexend-Regular", size: 12))
                         .foregroundColor(Color("bpink"))
                         .padding(.top, -20)
                        // .padding(.bottom, 10)
                         .padding(.leading, 175)
-                    
+                    // MARK: Auth Buttons
                     HStack(spacing: 30) {
                         Button(action: {
                             // do smtn here

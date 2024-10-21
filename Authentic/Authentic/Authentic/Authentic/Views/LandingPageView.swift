@@ -18,7 +18,7 @@ struct LandingPageView: View {
     var body: some View {
         ZStack {
             Color("lpink").edgesIgnoringSafeArea(.all)
-    
+            // MARK: Title
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
@@ -41,7 +41,7 @@ struct LandingPageView: View {
                     .scaledToFit()
                     .frame(width: 390, height: 550)
                     .padding(.top, -90)
-                
+                // MARK: Quote Logic
                 TabView(selection: $currentQuoteIndex) {
                     ForEach(0..<quotes.count, id: \.self) { index in
                         Text(self.quotes[index])
@@ -59,7 +59,7 @@ struct LandingPageView: View {
                         currentQuoteIndex = (currentQuoteIndex + 1) % quotes.count
                     }
                 }
-                
+                // MARK: Get Started Button
                 Button(action: {
                     isPresented.toggle()
                 }) {
@@ -78,6 +78,7 @@ struct LandingPageView: View {
         .onAppear {
             _ = self.timer
         }
+        // MARK: View Showing Logic
         .fullScreenCover(isPresented: $isPresented) {
             ZStack {
                 if isShowingSignup {
