@@ -4,33 +4,23 @@
 //
 //  Created by Sydney Christenson on 2/29/24.
 //
+// MARK: The Log In button WILL NOT WORK while in dev. The Log in page will appear first and will show this SignUpView once called by user clicking the "Sign Up" button. 
 
 import SwiftUI
 import FirebaseAuth
-
-struct SignUpView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignUpView()
-            .previewDevice(PreviewDevice(rawValue: "iPhone 15"))
-            .previewDisplayName("iPhone 15")
-    }
-}
-
-
 import SwiftUI
 
 struct SignUpView: View {
     @State private var email: String = ""
     @State private var password: String = ""
-    @State private var showingLogin = false
+    // MARK: View Properties
+    @Binding var isShowingSignup: Bool
     @State private var alertMessage: String? = nil
     @State private var showAlert: Bool = false
 
 
     var body: some View {
         ZStack(alignment: .top) {
-            
-
             Color("lpink").edgesIgnoringSafeArea(.all)
             
             VStack{
@@ -133,7 +123,7 @@ struct SignUpView: View {
                     
                     
                     Button("Next") {
-                                    
+                                    //logic here
                                 }
                     .font(.custom("Lexend-Regular", size: 16))
                     .padding()
@@ -148,7 +138,7 @@ struct SignUpView: View {
                             .font(.custom("Lexend-Light", size: 14))
                             .foregroundColor(Color.gray)
                         Button(action: {
-                            showingLogin.toggle()
+                            isShowingSignup.toggle()
                         }) {
                             Text("Log in")
                                 .font(.custom("Lexend-SemiBold", size: 14))
@@ -166,9 +156,14 @@ struct SignUpView: View {
                 .shadow(radius: 5)
             }
         }
-        .sheet(isPresented: $showingLogin) {
-            LoginView()
-        }
+    }
+}
+
+struct SignUpView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignUpView(isShowingSignup: .constant(false))
+            .previewDevice(PreviewDevice(rawValue: "iPhone 15"))
+            .previewDisplayName("iPhone 15")
     }
 }
 

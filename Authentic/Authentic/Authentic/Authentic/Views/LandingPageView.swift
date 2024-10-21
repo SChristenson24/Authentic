@@ -77,7 +77,7 @@ struct LandingPageView: View {
         }
         
         .fullScreenCover(isPresented: $showingSignUp) {
-            SignUpView()
+           // SignUpView()
         }
     }
 }

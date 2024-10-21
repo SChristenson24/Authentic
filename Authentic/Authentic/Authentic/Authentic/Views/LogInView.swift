@@ -4,6 +4,7 @@
 //
 //  Created by Sydney Christenson on 2/29/24.
 //
+//
 
 import SwiftUI
 import FirebaseAuth
@@ -14,9 +15,10 @@ struct LoginView: View {
     @State private var password: String = ""
     // MARK: View Properties
     @State var showingSignUp: Bool = false
+    @State var createAccount: Bool = false
     @State var showError: Bool = false
     @State var errorMessage: String = ""
-    
+    @State private var isShowingSignup = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -143,7 +145,7 @@ struct LoginView: View {
                             .font(.custom("Lexend-Light", size: 14))
                             .foregroundColor(Color.gray)
                         Button(action: {
-                            showingSignUp.toggle()
+                            isShowingSignup.toggle()
                         }) {
                             Text("Sign Up")
                                 .font(.custom("Lexend-SemiBold", size: 14))
@@ -161,8 +163,8 @@ struct LoginView: View {
                 .shadow(radius: 5)
             }
         }
-        .sheet(isPresented: $showingSignUp) {
-            SignUpView()
+        .fullScreenCover(isPresented: $isShowingSignup) {
+            SignUpView(isShowingSignup: $isShowingSignup)
         }
     }
 }
@@ -172,3 +174,7 @@ struct LoginView_Previews: PreviewProvider {
         LoginView()
     }
 }
+
+
+
+
