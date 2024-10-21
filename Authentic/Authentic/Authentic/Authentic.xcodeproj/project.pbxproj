@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D1664FB2CC6FF3300DCC752 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D1664FA2CC6FF3300DCC752 /* GoogleService-Info.plist */; };
 		214E07182B91905700208E20 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E07172B91905700208E20 /* SignUpView.swift */; };
 		214E071A2B91909900208E20 /* LandingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E07192B91909900208E20 /* LandingPageView.swift */; };
 		214E071C2B9191E500208E20 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E071B2B9191E500208E20 /* LogInView.swift */; };
@@ -50,7 +51,6 @@
 		21DA5A342BB8857400047EA0 /* Lexend-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21DA5A2B2BB8857300047EA0 /* Lexend-Bold.ttf */; };
 		21DA5A352BB8857400047EA0 /* Lexend-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21DA5A2C2BB8857300047EA0 /* Lexend-ExtraLight.ttf */; };
 		21DA5A362BB8857400047EA0 /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21DA5A2D2BB8857300047EA0 /* Lexend-Regular.ttf */; };
-		CF0B8D892C8D429D002D1966 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF0B8D882C8D429D002D1966 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +71,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D1664FA2CC6FF3300DCC752 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		214E07172B91905700208E20 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		214E07192B91909900208E20 /* LandingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageView.swift; sourceTree = "<group>"; };
 		214E071B2B9191E500208E20 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
@@ -95,7 +96,6 @@
 		21DA5A2C2BB8857300047EA0 /* Lexend-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-ExtraLight.ttf"; sourceTree = "<group>"; };
 		21DA5A2D2BB8857300047EA0 /* Lexend-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-Regular.ttf"; sourceTree = "<group>"; };
 		21DA5A382BB8875B00047EA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		CF0B8D882C8D429D002D1966 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				2155DC162B901CF6007D6E3A /* Authentic */,
+				1D1664FA2CC6FF3300DCC752 /* GoogleService-Info.plist */,
 				2155DC2C2B901CF8007D6E3A /* AuthenticTests */,
 				2155DC362B901CF8007D6E3A /* AuthenticUITests */,
 				2155DC152B901CF6007D6E3A /* Products */,
@@ -187,7 +188,6 @@
 				2155DC222B901CF8007D6E3A /* Authentic.xcdatamodeld */,
 				2155DC1D2B901CF8007D6E3A /* Preview Content */,
 				1D1664F72CC6D8B100DCC752 /* Views */,
-				CF0B8D882C8D429D002D1966 /* GoogleService-Info.plist */,
 			);
 			path = Authentic;
 			sourceTree = "<group>";
@@ -371,7 +371,7 @@
 				21DA5A302BB8857400047EA0 /* Lexend-Thin.ttf in Resources */,
 				21DA5A332BB8857400047EA0 /* Lexend-ExtraBold.ttf in Resources */,
 				2155DC1F2B901CF8007D6E3A /* Preview Assets.xcassets in Resources */,
-				CF0B8D892C8D429D002D1966 /* GoogleService-Info.plist in Resources */,
+				1D1664FB2CC6FF3300DCC752 /* GoogleService-Info.plist in Resources */,
 				21DA5A342BB8857400047EA0 /* Lexend-Bold.ttf in Resources */,
 				2155DC1C2B901CF8007D6E3A /* Assets.xcassets in Resources */,
 				21DA5A2E2BB8857400047EA0 /* Lexend-Black.ttf in Resources */,
