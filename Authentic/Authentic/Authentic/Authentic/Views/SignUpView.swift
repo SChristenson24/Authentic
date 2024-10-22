@@ -2,8 +2,8 @@ import SwiftUI
 import FirebaseAuth
 
 struct SignUpView: View {
-    @State private var email: String = ""
-    @State private var password: String = ""
+    @State var email: String = ""
+    @State var password: String = ""
     @Binding var isShowingSignup: Bool
     @State private var navToProfileInfo = false
     @State private var errorMessage = ""
@@ -123,7 +123,7 @@ struct SignUpView: View {
                         }
                         
                         Button(action: {
-                            signUp()
+                            navToProfileInfo = true
                         }) {
                             Text("Next")
                                 .font(.custom("Lexend-Regular", size: 16))
@@ -135,7 +135,10 @@ struct SignUpView: View {
                         }
                         .padding(.horizontal, 80)
                         .padding(.bottom, 10)
-
+                        .navigationDestination(isPresented: $navToProfileInfo) {
+                            ProfileInformationView(email: email, password: password)
+                        }
+                        
                         HStack {
                             Text("Already have an account?")
                                 .font(.custom("Lexend-Light", size: 14))
@@ -158,34 +161,9 @@ struct SignUpView: View {
                     .cornerRadius(35)
                     .edgesIgnoringSafeArea(.bottom)
                     .shadow(radius: 5)
-                }
-                .navigationDestination(isPresented: $navToProfileInfo) {
-                    ProfileInformationView()
+                    
                 }
             }
         }
     }
-    
-    func signUp() {
-            errorMessage = ""
-            
-            if email.isEmpty || password.isEmpty {
-                errorMessage = "All fields are required. Please enter your email and password."
-                return
-            }
-            
-            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                if let error = error {
-                    errorMessage = error.localizedDescription
-                } else {
-                    navToProfileInfo = true
-                }
-            }
-        }
-    }
-
-    struct SignUpView_Previews: PreviewProvider {
-        static var previews: some View {
-            SignUpView(isShowingSignup: .constant(true))
-        }
-    }
+}

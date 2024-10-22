@@ -20,6 +20,7 @@ struct LoginView: View {
     @State var errorMessage: String = ""
     @Binding var isShowingSignup: Bool
     @State private var isLoggedIn = false
+    @State private var navToSuccessView = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -132,7 +133,7 @@ struct LoginView: View {
                     }
                     
                     Button(action: {
-                        //validateSignUpData()
+                        logIn()
                     }) {
                         Text("Log In")
                             .font(.custom("Lexend-Regular", size: 16))
@@ -178,7 +179,7 @@ struct LoginView: View {
             if let error = error {
                 errorMessage = error.localizedDescription
             } else {
-                isLoggedIn = true
+                navToSuccessView = true
             }
         }
     }
