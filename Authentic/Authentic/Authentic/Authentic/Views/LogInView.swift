@@ -19,7 +19,7 @@ struct LoginView: View {
     @State var showError: Bool = false
     @State var errorMessage: String = ""
     @Binding var isShowingSignup: Bool
-   // @Binding var isShowingLogin: Bool
+    @State private var isLoggedIn = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -169,12 +169,28 @@ struct LoginView: View {
             }
         }
     }
+    
+    func logIn() {
+        errorMessage = ""
+        
+        // Firebase Auth login function
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                errorMessage = error.localizedDescription
+            } else {
+                isLoggedIn = true
+            }
+        }
+    }
 }
-struct LogInView_Previews: PreviewProvider {
+
+struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView(isShowingSignup: .constant(false))
     }
 }
+
+
 
 
 

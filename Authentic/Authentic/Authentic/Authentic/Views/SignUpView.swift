@@ -123,7 +123,7 @@ struct SignUpView: View {
                         }
                         
                         Button(action: {
-                            validateSignUpData()
+                            signUp()
                         }) {
                             Text("Next")
                                 .font(.custom("Lexend-Regular", size: 16))
@@ -153,6 +153,7 @@ struct SignUpView: View {
                         
                         Spacer()
                     }
+                    
                     .background(Color.white)
                     .cornerRadius(35)
                     .edgesIgnoringSafeArea(.bottom)
@@ -164,20 +165,27 @@ struct SignUpView: View {
             }
         }
     }
-
-    func validateSignUpData() {
-        errorMessage = ""
-        
-        if email.isEmpty || password.isEmpty {
-            errorMessage = "All fields are required. Please enter your email and password."
-        } else {
-            navToProfileInfo = true
+    
+    func signUp() {
+            errorMessage = ""
+            
+            if email.isEmpty || password.isEmpty {
+                errorMessage = "All fields are required. Please enter your email and password."
+                return
+            }
+            
+            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                if let error = error {
+                    errorMessage = error.localizedDescription
+                } else {
+                    navToProfileInfo = true
+                }
+            }
         }
     }
-}
 
-struct SignUpView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignUpView(isShowingSignup: .constant(true))
+    struct SignUpView_Previews: PreviewProvider {
+        static var previews: some View {
+            SignUpView(isShowingSignup: .constant(true))
+        }
     }
-}

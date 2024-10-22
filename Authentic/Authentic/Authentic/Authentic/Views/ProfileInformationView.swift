@@ -92,6 +92,7 @@ struct ProfileInformationView: View {
                         .font(.custom("Lexend-Regular", size: 14))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 20)
+                        .padding(.top, 20)
                         .fixedSize(horizontal: false, vertical: true)
                         .opacity(errorMessage.isEmpty ? 0 : 1)
                     
