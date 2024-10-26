@@ -138,6 +138,8 @@ struct LoginView: View {
     @State private var error: String = ""
     @State private var isLoggedIn = false
     @Binding var showLogInView: Bool
+    @Binding var isShowingSignup: Bool
+
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -148,7 +150,7 @@ struct LoginView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(height: 350)
-                    .padding(.bottom, -150)
+                    .padding(.bottom, -140)
                     .edgesIgnoringSafeArea(.bottom)
                 
                 VStack {
@@ -156,14 +158,15 @@ struct LoginView: View {
                     
                     Text("Log In")
                         .font(.custom("Lexend-Bold", size: 35))
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 30)
+                        .padding(.top, 50)
                         .foregroundColor(Color("darkgray"))
-                        .padding(.trailing, 180)
+                        .padding(.trailing, 200)
                     
                     Text("Email")
-                        .font(.custom("Lexend-Thin", size: 16))
+                        .font(.custom("Lexend-Light", size: 14))
                         .padding(.top, -10)
-                        .padding(.bottom, 15)
+                        .padding(.bottom, 1)
                         .padding(.trailing, 270)
                         .foregroundColor(Color.gray)
                     
@@ -182,10 +185,10 @@ struct LoginView: View {
                     .padding(.horizontal, 45)
                     
                     Text("Password")
-                        .font(.custom("Lexend-Thin", size: 16))
+                        .font(.custom("Lexend-Light", size: 14))
                         .padding(.top, 25)
-                        .padding(.bottom, 15)
-                        .padding(.trailing, 250)
+                        .padding(.bottom, 1)
+                        .padding(.trailing, 235)
                         .foregroundColor(Color.gray)
                     
                     HStack{
@@ -201,8 +204,16 @@ struct LoginView: View {
                     .cornerRadius(25)
                     .shadow(radius: 1)
                     .padding(.horizontal, 45)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 20)
                     
+                    // MARK: RESET BUTTON
+                    Button("Reset password?", action: {})
+                        .font(.custom("Lexend-Regular", size: 12))
+                        .foregroundColor(Color("bpink"))
+                        .padding(.top, -20)
+                        .padding(.leading, 175)
+                    
+                    //MARK: AUTH BUTTONS
                     if !error.isEmpty{
                         Text(error)
                             .foregroundColor(.red)
@@ -226,7 +237,7 @@ struct LoginView: View {
                             Image("fbicon")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 60, height: 60)
+                                .frame(width: 45, height: 45)
                                 .clipShape(Circle())
                                 .shadow(radius: 2)
                                 .padding(.bottom, 10)
@@ -244,7 +255,7 @@ struct LoginView: View {
                             Image("appleicon")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 50, height: 50)
+                                .frame(width: 35, height: 35)
                                 .clipShape(Circle())
                                 .shadow(radius: 2)
                                 .padding(.bottom, 10)
@@ -264,35 +275,41 @@ struct LoginView: View {
                             Image("googleicon")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 50, height: 50)
+                                .frame(width: 35, height: 35)
                                 .clipShape(Circle())
                                 .shadow(radius: 2)
                                 .padding(.bottom, 10)
                         }
                     }
                     
-                    Button("Log In") {
+                    Button(action: {
                         signIn()
+                    }) {
+                        Text("Log In")
+                            .font(.custom("Lexend-Regular", size: 16))
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color("bpink"))
+                            .cornerRadius(25)
                     }
-                    .padding()
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .background(Color("lpink"))
-                    .cornerRadius(25)
                     .padding(.horizontal, 80)
+                    .padding(.bottom, 10)
                     
                     HStack {
                         Text("Don't have an account?")
+                            .font(.custom("Lexend-Light", size: 14))
+                            .foregroundColor(Color.gray)
                         Button(action: {
-                            showingSignUp.toggle()
+                            isShowingSignup = true
                         }) {
                             Text("Sign Up")
-                                .fontWeight(.semibold)
+                                .font(.custom("Lexend-SemiBold", size: 14))
                                 .foregroundColor(Color("bpink"))
                         }
                     }
-                    .padding(.top, 20)
-                    .padding(.bottom, 50)
+                    .padding(.top, 10)
+                    .padding(.bottom, 30)
                     
                     Spacer()
                 }
@@ -302,9 +319,7 @@ struct LoginView: View {
                 .shadow(radius: 5)
             }
         }
-        .sheet(isPresented: $showingSignUp) {
-            SignUpView()
-        }
+
         .fullScreenCover(isPresented: $isLoggedIn)
         {
             SuccessView() //********WILL NEED UPDATED APPROPRIATELY**********
@@ -332,3 +347,11 @@ struct LoginView: View {
         }
     }
 }
+
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginView(showLogInView: .constant(true), isShowingSignup: .constant(false))
+    }
+}
+
+

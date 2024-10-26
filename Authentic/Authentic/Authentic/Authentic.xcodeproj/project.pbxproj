@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D95CD1A2CCDB5880034A38D /* ProfileInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D95CD192CCDB5880034A38D /* ProfileInformationView.swift */; };
 		214E07182B91905700208E20 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E07172B91905700208E20 /* SignUpView.swift */; };
 		214E071A2B91909900208E20 /* LandingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E07192B91909900208E20 /* LandingPageView.swift */; };
 		214E071C2B9191E500208E20 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E071B2B9191E500208E20 /* LogInView.swift */; };
@@ -80,6 +81,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D95CD192CCDB5880034A38D /* ProfileInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInformationView.swift; sourceTree = "<group>"; };
 		214E07172B91905700208E20 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		214E07192B91909900208E20 /* LandingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageView.swift; sourceTree = "<group>"; };
 		214E071B2B9191E500208E20 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				214E071B2B9191E500208E20 /* LogInView.swift */,
 				B22366742CA3461C006F1B31 /* SuccessView.swift */,
 				B2168A7A2CAA4A0300119782 /* SignInFacebookHelper.swift */,
+				1D95CD192CCDB5880034A38D /* ProfileInformationView.swift */,
 				B2A22B142CA399DE001DDF8B /* Authentic.entitlements */,
 				B223666F2CA32CEA006F1B31 /* Utilities */,
 				B22366682CA32923006F1B31 /* AuthenticationManager.swift */,
@@ -442,6 +445,7 @@
 				B22366732CA342CA006F1B31 /* SignInGoogleHelper.swift in Sources */,
 				214E07182B91905700208E20 /* SignUpView.swift in Sources */,
 				2155DC182B901CF6007D6E3A /* AuthenticApp.swift in Sources */,
+				1D95CD1A2CCDB5880034A38D /* ProfileInformationView.swift in Sources */,
 				B22366712CA32D09006F1B31 /* Utilities.swift in Sources */,
 				2155DC242B901CF8007D6E3A /* Authentic.xcdatamodeld in Sources */,
 			);

@@ -1,190 +1,194 @@
-//
-//  SignUpView.swift
-//  Authentic
-//
-//  Created by Sydney Christenson on 2/29/24.
-//
-
 import SwiftUI
 import FirebaseAuth
-
-struct SignUpView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignUpView()
-            .previewDevice(PreviewDevice(rawValue: "iPhone 15"))
-            .previewDisplayName("iPhone 15")
-    }
-}
-
-
-import SwiftUI
 
 struct SignUpView: View {
     @State private var email: String = ""
     @State private var password: String = ""
+    @State private var navToProfileInfo = false
+    @State private var errorMessage = ""
+    @State private var isLoading = false
     @State private var showingLogin = false
-    @State private var error: String = ""
-    @State private var isLoading = false  
-    
+    @Binding var isShowingSignup: Bool
+    @Binding var showLogInView: Bool
+
+
+
     var body: some View {
-        ZStack(alignment: .top) {
-            
-
-            Color("lpink").edgesIgnoringSafeArea(.all)
-            
-            VStack{
-                Image("stat")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 350)
-                    //.padding(.top, 10)
-                    .padding(.bottom, -140)
-                    .edgesIgnoringSafeArea(.bottom)
-                VStack{
+        NavigationStack {
+            ZStack(alignment: .top) {
+                Color("lpink").edgesIgnoringSafeArea(.all)
+                
+                VStack {
+                    Image("stat")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 350)
+                        .padding(.bottom, -140)
+                        .edgesIgnoringSafeArea(.bottom)
                     
-                    Text("Sign Up")
-                        .font(.custom("Lexend-Bold", size: 35))
-                        .padding(.bottom, 20)
-                        .padding(.top, 50)
-                        .foregroundColor(Color("darkgray"))
-                        .padding(.trailing, 180)
-                    
-                    Text("Email")
-                        .font(.custom("Lexend-Thin", size: 16))
-                        .padding(.top, -10)
-                        .padding(.bottom, 15)
-                        .padding(.trailing, 270)
-                        .foregroundColor(Color.gray)
-                    
-                    HStack {
-                        Image(systemName: "envelope.fill")
-                            .foregroundColor(.gray)
-                            .padding(.leading, 2)
+                    VStack {
+                        // MARK: Sign Up Text
+                        Text("Sign Up")
+                            .font(.custom("Lexend-Bold", size: 35))
+                            .padding(.bottom, 30)
+                            .padding(.top, 50)
+                            .foregroundColor(Color("darkgray"))
+                            .padding(.trailing, 200)
                         
-                        TextField("", text: $email)
-                            .padding(.leading, 10)
-                    }
-                    .padding()
-                    .background(Color("lightgray"))
-                    .cornerRadius(25)
-                    .shadow(radius: 1)
-                    .padding(.horizontal, 45)
-
-                    
-                    Text("Password")
-                        .font(.custom("Lexend-Thin", size: 16))
-                        .padding(.top, 25)
-                        .padding(.bottom, 15)
-                        .padding(.trailing, 250)
-                        .foregroundColor(Color.gray)
-                    
-                    HStack{
-                        Image(systemName: "key.fill")
-                            .foregroundColor(.gray)
-                            .padding(.leading, 2)
-                            .rotationEffect(.degrees(45))
-                        SecureField("", text: $password)
-                            .padding(.leading, 10)
-                    }
+                        // MARK: Email Text
+                        Text("Email")
+                            .font(.custom("Lexend-Light", size: 14))
+                            .padding(.top, -10)
+                            .padding(.bottom, 1)
+                            .padding(.trailing, 270)
+                            .foregroundColor(Color.gray)
+                        
+                        HStack {
+                            Image(systemName: "envelope.fill")
+                                .foregroundColor(.gray)
+                                .padding(.leading, 2)
+                            
+                            TextField("", text: $email)
+                                .padding(.leading, 10)
+                        }
                         .padding()
                         .background(Color("lightgray"))
                         .cornerRadius(25)
                         .shadow(radius: 1)
                         .padding(.horizontal, 45)
-                        .padding(.bottom, 30)
-                    
-                    HStack(spacing: 30) {
-                        Button(action: {
-                            // do smtn here
-                        }){
-                            Image("fbicon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 60, height: 60)
-                                .clipShape(Circle())
-                                .shadow(radius: 2)
-                                .padding(.bottom, 10)
+                        
+                        // MARK: Password Text
+                        Text("Password")
+                            .font(.custom("Lexend-Light", size: 14))
+                            .padding(.top, 25)
+                            .padding(.bottom, 1)
+                            .padding(.trailing, 235)
+                            .foregroundColor(Color.gray)
+                        
+                        HStack {
+                            Image(systemName: "key.fill")
+                                .foregroundColor(.gray)
+                                .padding(.leading, 2)
+                                .rotationEffect(.degrees(45))
+                            SecureField("", text: $password)
+                                .padding(.leading, 10)
                         }
-                        Button(action: {
-                            // do smtn here
-                        }){
-                            Image("appleicon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                                .shadow(radius: 2)
-                                .padding(.bottom, 10)
+                        .padding()
+                        .background(Color("lightgray"))
+                        .cornerRadius(25)
+                        .shadow(radius: 1)
+                        .padding(.horizontal, 45)
+                        .padding(.bottom, 20)
+                        
+                        // MARK: Auth Buttons
+                        HStack(spacing: 30) {
+                            Button(action: {
+                                // Add Facebook login logic here
+                            }){
+                                Image("fbicon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 45, height: 45)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 2)
+                                    .padding(.bottom, 10)
+                            }
+                            Button(action: {
+                                // Add Apple login logic here
+                            }){
+                                Image("appleicon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 2)
+                                    .padding(.bottom, 10)
+                            }
+                            
+                            Button(action: {
+                                // Add Google login logic here
+                            }){
+                                Image("googleicon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 2)
+                                    .padding(.bottom, 10)
+                            }
+                        }
+                        
+                        // MARK: Error Messages
+                        if !errorMessage.isEmpty {
+                            Text(errorMessage)
+                                .foregroundColor(Color("bpink"))
+                                .font(.custom("Lexend-Regular", size: 14))
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 20)
                         }
                         
                         Button(action: {
-                            // do smtn here
-                        }){
-                            Image("googleicon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                                .shadow(radius: 2)
-                                .padding(.bottom, 10)
-                        }
-                    }
-                    
-                    
-                    Button("Next") {
-                        signUp()
-                                }
-
-                    .padding()
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .background(Color("lpink"))
-                    .cornerRadius(25)
-                    .padding(.horizontal, 80)
-                    
-                    if !error.isEmpty{
-                        Text(error)
-                            .foregroundColor(.red)
-                            .padding(.top, 10)
-                    }
-                    HStack {
-                        Text("Already have an account?")
-                        Button(action: {
-                            showingLogin.toggle()
+                            signUp()
                         }) {
-                            Text("Sign in")
-                                .fontWeight(.semibold)
-                                .foregroundColor(Color("bpink"))
+                            Text("Next")
+                                .font(.custom("Lexend-Regular", size: 16))
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .foregroundColor(.white)
+                                .background(Color("bpink"))
+                                .cornerRadius(25)
                         }
+                        .padding(.horizontal, 80)
+                        .padding(.bottom, 10)
+                        .navigationDestination(isPresented: $navToProfileInfo) {
+                            ProfileInformationView(email: email, password: password)
+                        }
+                        
+                        HStack {
+                            Text("Already have an account?")
+                                .font(.custom("Lexend-Light", size: 14))
+                                .foregroundColor(Color.gray)
+                            Button(action: {
+                                isShowingSignup = false
+                            }) {
+                                Text("Log In")
+                                    .font(.custom("Lexend-SemiBold", size: 14))
+                                    .foregroundColor(Color("bpink"))
+                            }
+                        }
+                        .padding(.top, 10)
+                        .padding(.bottom, 30)
+                        
+                        Spacer()
                     }
-                    .padding(.top, 50) 
-                    .padding(.bottom, 60)
-                    
-                    Spacer()
+                    .background(Color.white)
+                    .cornerRadius(35)
+                    .edgesIgnoringSafeArea(.bottom)
+                    .shadow(radius: 5)
                 }
-                .background(Color.white)
-                .cornerRadius(35)
-                .edgesIgnoringSafeArea(.bottom)
-                .shadow(radius: 5)
             }
-        }
-        .sheet(isPresented: $showingLogin) {
-            LoginView(showLogInView: $showingLogin)
         }
     }
-    func signUp(){
+    
+    // MARK: Sign Up Logic
+    func signUp() {
         isLoading = true
-        error = ""
+        errorMessage = ""
         
-        Auth.auth().createUser(withEmail: email, password: password){result, error in isLoading = false
-            
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            isLoading = false
             if let error = error {
-                self.error = error.localizedDescription
-                return
-                    
-                }
+                errorMessage = error.localizedDescription
+            } else {
+                navToProfileInfo = true
             }
+        }
     }
 }
 
+struct SignUpView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignUpView(isShowingSignup: .constant(true), showLogInView: .constant(false))
+    }
+}
 
