@@ -1,10 +1,3 @@
-//
-//  AuthenticApp.swift
-//  Authentic
-//
-//  Created by Sydney Christenson on 2/28/24.
-//
-
 import SwiftUI
 import FirebaseCore
 import FBSDKCoreKit
@@ -29,4 +22,3 @@ struct AuthenticApp: App {
         ApplicationDelegate.shared.application(app, open: url, options: options)
     }
 }
-

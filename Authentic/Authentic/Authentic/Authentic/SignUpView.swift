@@ -7,11 +7,8 @@ struct SignUpView: View {
     @State private var navToProfileInfo = false
     @State private var errorMessage = ""
     @State private var isLoading = false
-    @State private var showingLogin = false
     @Binding var isShowingSignup: Bool
     @Binding var showLogInView: Bool
-    
-    
     
     var body: some View {
         NavigationStack {
@@ -35,7 +32,7 @@ struct SignUpView: View {
                             .foregroundColor(Color("darkgray"))
                             .padding(.trailing, 200)
                         
-                        // MARK: Email Text
+                        // MARK: Email Field
                         Text("Email")
                             .font(.custom("Lexend-Light", size: 14))
                             .padding(.top, -10)
@@ -57,7 +54,7 @@ struct SignUpView: View {
                         .shadow(radius: 1)
                         .padding(.horizontal, 45)
                         
-                        // MARK: Password Text
+                        // MARK: Password Field
                         Text("Password")
                             .font(.custom("Lexend-Light", size: 14))
                             .padding(.top, 25)
@@ -80,11 +77,11 @@ struct SignUpView: View {
                         .padding(.horizontal, 45)
                         .padding(.bottom, 20)
                         
-                        // MARK: Auth Buttons
+                        // MARK: Social Media Login Buttons
                         HStack(spacing: 30) {
                             Button(action: {
                                 // Add Facebook login logic here
-                            }){
+                            }) {
                                 Image("fbicon")
                                     .resizable()
                                     .scaledToFit()
@@ -95,7 +92,7 @@ struct SignUpView: View {
                             }
                             Button(action: {
                                 // Add Apple login logic here
-                            }){
+                            }) {
                                 Image("appleicon")
                                     .resizable()
                                     .scaledToFit()
@@ -104,10 +101,9 @@ struct SignUpView: View {
                                     .shadow(radius: 2)
                                     .padding(.bottom, 10)
                             }
-                            
                             Button(action: {
                                 // Add Google login logic here
-                            }){
+                            }) {
                                 Image("googleicon")
                                     .resizable()
                                     .scaledToFit()
@@ -128,7 +124,7 @@ struct SignUpView: View {
                         }
                         
                         Button(action: {
-                            navToProfileInfo = true
+                            validateFields()
                         }) {
                             Text("Next")
                                 .font(.custom("Lexend-Regular", size: 16))
@@ -169,6 +165,19 @@ struct SignUpView: View {
             }
         }
     }
+    
+    // MARK: Input Validation
+    private func validateFields() {
+        errorMessage = ""
+        
+        if !email.contains("@") || !email.contains(".") {
+            errorMessage = "Please enter a valid email address."
+        } else if password.isEmpty {
+            errorMessage = "Password cannot be empty."
+        } else {
+            navToProfileInfo = true
+        }
+    }
 }
 
 struct SignUpView_Previews: PreviewProvider {
@@ -176,4 +185,3 @@ struct SignUpView_Previews: PreviewProvider {
         SignUpView(isShowingSignup: .constant(true), showLogInView: .constant(false))
     }
 }
-

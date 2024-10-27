@@ -2,56 +2,49 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLName</key>
-            <string>google sign in</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>com.googleusercontent.apps.913606794044-4p35dpefa72us00816nn0abp9pnrn3lr</string>
-            </array>
-        </dict>
-        <dict>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>fb899208345474785</string>
-            </array>
-        </dict>
-    </array>
-
-    <key>GIDClientID</key>
-    <string>913606794044-4p35dpefa72us00816nn0abp9pnrn3lr.apps.googleusercontent.com</string>
-
-    <key>UIAppFonts</key>
-    <array>
-        <string>Lexend-Black.ttf</string>
-        <string>Lexend-Bold.ttf</string>
-        <string>Lexend-ExtraBold.ttf</string>
-        <string>Lexend-ExtraLight.ttf</string>
-        <string>Lexend-Light.ttf</string>
-        <string>Lexend-Medium.ttf</string>
-        <string>Lexend-Regular.ttf</string>
-        <string>Lexend-SemiBold.ttf</string>
-        <string>Lexend-Thin</string>
-    </array>
-
-    <key>FacebookAppID</key>
-    <string>899208345474785</string>
-
-    <key>FacebookClientToken</key>
-    <string>a6f61a8e9eae14f9ec03a9e70b1bc30d</string>
-
-    <key>FacebookDisplayName</key>
-    <string>Authentic</string>
-
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>fbapi</string>
-        <string>fb-messenger-share-api</string>
-    </array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>google sign in</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.913606794044-4p35dpefa72us00816nn0abp9pnrn3lr</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb899208345474785</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>899208345474785</string>
+	<key>FacebookClientToken</key>
+	<string>a6f61a8e9eae14f9ec03a9e70b1bc30d</string>
+	<key>FacebookDisplayName</key>
+	<string>Authentic</string>
+	<key>GIDClientID</key>
+	<string>913606794044-4p35dpefa72us00816nn0abp9pnrn3lr.apps.googleusercontent.com</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Lexend-Black.ttf</string>
+		<string>Lexend-Bold.ttf</string>
+		<string>Lexend-ExtraBold.ttf</string>
+		<string>Lexend-ExtraLight.ttf</string>
+		<string>Lexend-Light.ttf</string>
+		<string>Lexend-Medium.ttf</string>
+		<string>Lexend-Regular.ttf</string>
+		<string>Lexend-SemiBold.ttf</string>
+		<string>Lexend-Thin</string>
+	</array>
 </dict>
 </plist>
-

@@ -10,16 +10,16 @@ struct ProfileInformationView: View {
     @State private var birthday = Date()
     @State private var errorMessage: String = ""
     @State private var navToSuccess = false
-    
+
     // Passed from the SignUpView
     let email: String
     let password: String
-    
+
     var body: some View {
         NavigationStack {
             ZStack {
                 Color("lpink").edgesIgnoringSafeArea(.all)
-                
+
                 VStack {
                     // MARK: Custom Back Button
                     HStack {
@@ -33,13 +33,13 @@ struct ProfileInformationView: View {
                         }
                         Spacer()
                     }
-                    
+
                     Text("Complete Your Profile")
                         .font(.custom("Lexend-Bold", size: 24))
                         .padding(.top, 20)
                         .padding(.bottom, 20)
                         .foregroundColor(Color("darkgray"))
-                    
+
                     VStack(spacing: 20) {
                         // MARK: First Name Field
                         HStack {
@@ -52,7 +52,7 @@ struct ProfileInformationView: View {
                         .background(Color("lightgray"))
                         .cornerRadius(25)
                         .padding(.horizontal, 20)
-                        
+
                         // MARK: Last Name Field
                         HStack {
                             Image(systemName: "person.fill")
@@ -64,7 +64,7 @@ struct ProfileInformationView: View {
                         .background(Color("lightgray"))
                         .cornerRadius(25)
                         .padding(.horizontal, 20)
-                        
+
                         // MARK: Username Field
                         HStack {
                             Image(systemName: "at")
@@ -76,14 +76,14 @@ struct ProfileInformationView: View {
                         .background(Color("lightgray"))
                         .cornerRadius(25)
                         .padding(.horizontal, 20)
-                        
+
                         // MARK: Birthday Date Picker
                         VStack(alignment: .leading) {
                             Text("Birthday")
                                 .font(.custom("Lexend-Light", size: 16))
                                 .foregroundColor(Color.gray)
                                 .padding(.leading, 30)
-                            
+
                             DatePicker("", selection: $birthday, displayedComponents: .date)
                                 .padding()
                                 .background(Color("lightgray"))
@@ -92,7 +92,7 @@ struct ProfileInformationView: View {
                                 .datePickerStyle(WheelDatePickerStyle())
                                 .padding(.bottom, -30)
                         }
-                        
+
                         // MARK: Error Message Styling
                         Text(errorMessage.isEmpty ? " " : errorMessage)
                             .foregroundColor(Color("bpink"))
@@ -102,11 +102,11 @@ struct ProfileInformationView: View {
                             .padding(.top, 20)
                             .fixedSize(horizontal: false, vertical: true)
                             .opacity(errorMessage.isEmpty ? 0 : 1)
-                        
+
                         Spacer()
-                        
+
                         // MARK: Save Profile Button
-                        Button(action: validateAndCreateAccount) {
+                        Button(action: validateAndSaveProfile) {
                             Text("Save Profile")
                                 .font(.custom("Lexend-Regular", size: 16))
                                 .padding()
@@ -133,46 +133,51 @@ struct ProfileInformationView: View {
             }
         }
     }
-    
-    // MARK: Profile Function and Firebase Logic
-    func validateAndCreateAccount() {
+
+    // MARK: Validate and Save Profile
+    private func validateAndSaveProfile() {
         errorMessage = ""
         
+        // Validate fields
         let calendar = Calendar.current
         let ageComponents = calendar.dateComponents([.year], from: birthday, to: Date())
         let age = ageComponents.year ?? 0
         
         if firstName.isEmpty || lastName.isEmpty || username.isEmpty {
             errorMessage = "All fields are required."
+            return
         } else if age < 18 {
             errorMessage = "You must be at least 18 years old."
-        } else {
-            // Account creation and profile info submission logic
-            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                if let error = error {
-                    DispatchQueue.main.async {
-                        errorMessage = error.localizedDescription
-                    }
-                } else {
-                    // Save profile data in Firestore
-                    let db = Firestore.firestore()
-                    if let userId = authResult?.user.uid {
-                        db.collection("users").document(userId).setData([
-                            "firstName": firstName,
-                            "lastName": lastName,
-                            "username": username,
-                            "birthday": birthday
-                        ]) { err in
-                            if let err = err {
-                                DispatchQueue.main.async {
-                                    errorMessage = "Error saving profile: \(err.localizedDescription)"
-                                }
-                            } else {
-                                // Navigate to success view after successful profile creation
-                                DispatchQueue.main.async {
-                                    navToSuccess = true
-                                }
-                            }
+            return
+        }
+        
+        // If validation passes, create account and save data
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    errorMessage = error.localizedDescription
+                }
+                return
+            }
+            
+            // Save profile data in Firestore
+            let db = Firestore.firestore()
+            if let userId = authResult?.user.uid {
+                let userData = [
+                    "firstName": firstName,
+                    "lastName": lastName,
+                    "username": username,
+                    "birthday": birthday
+                ] as [String : Any]
+                
+                db.collection("users").document(userId).setData(userData) { err in
+                    if let err = err {
+                        DispatchQueue.main.async {
+                            errorMessage = "Error saving profile: \(err.localizedDescription)"
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            navToSuccess = true
                         }
                     }
                 }
