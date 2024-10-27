@@ -10,9 +10,9 @@ struct SignUpView: View {
     @State private var showingLogin = false
     @Binding var isShowingSignup: Bool
     @Binding var showLogInView: Bool
-
-
-
+    
+    
+    
     var body: some View {
         NavigationStack {
             ZStack(alignment: .top) {
@@ -128,7 +128,7 @@ struct SignUpView: View {
                         }
                         
                         Button(action: {
-                            signUp()
+                            navToProfileInfo = true
                         }) {
                             Text("Next")
                                 .font(.custom("Lexend-Regular", size: 16))
@@ -166,21 +166,6 @@ struct SignUpView: View {
                     .edgesIgnoringSafeArea(.bottom)
                     .shadow(radius: 5)
                 }
-            }
-        }
-    }
-    
-    // MARK: Sign Up Logic
-    func signUp() {
-        isLoading = true
-        errorMessage = ""
-        
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            isLoading = false
-            if let error = error {
-                errorMessage = error.localizedDescription
-            } else {
-                navToProfileInfo = true
             }
         }
     }

@@ -3,7 +3,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct ProfileInformationView: View {
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @State private var firstName: String = ""
     @State private var lastName: String = ""
     @State private var username: String = ""
@@ -24,7 +24,7 @@ struct ProfileInformationView: View {
                     // MARK: Custom Back Button
                     HStack {
                         Button(action: {
-                            presentationMode.wrappedValue.dismiss()
+                            dismiss()
                         }) {
                             Image(systemName: "arrow.left")
                                 .foregroundColor(.white)
@@ -129,7 +129,7 @@ struct ProfileInformationView: View {
                 .navigationDestination(isPresented: $navToSuccess) {
                     SuccessView()
                 }
-                .navigationBarBackButtonHidden(true)  // Hides default back button
+                .navigationBarBackButtonHidden(true)
             }
         }
     }
