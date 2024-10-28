@@ -151,7 +151,6 @@ struct ProfileInformationView: View {
             return
         }
         
-        // If validation passes, create account and save data
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 DispatchQueue.main.async {
@@ -160,25 +159,19 @@ struct ProfileInformationView: View {
                 return
             }
             
-            // Save profile data in Firestore
             let db = Firestore.firestore()
-            if let userId = authResult?.user.uid {
-                let userData = [
+            if let userId = Auth.auth().currentUser?.uid {
+                db.collection("users").document(userId).setData([
                     "firstName": firstName,
                     "lastName": lastName,
                     "username": username,
-                    "birthday": birthday
-                ] as [String : Any]
-                
-                db.collection("users").document(userId).setData(userData) { err in
+                    "birthday": birthday,
+                    "email": email
+                ]) { err in
                     if let err = err {
-                        DispatchQueue.main.async {
-                            errorMessage = "Error saving profile: \(err.localizedDescription)"
-                        }
+                        errorMessage = "Error saving profile: \(err.localizedDescription)"
                     } else {
-                        DispatchQueue.main.async {
-                            navToSuccess = true
-                        }
+                        navToSuccess = true
                     }
                 }
             }

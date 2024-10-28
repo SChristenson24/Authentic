@@ -1,5 +1,6 @@
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 
 struct SignUpView: View {
     @State private var email: String = ""
@@ -166,16 +167,30 @@ struct SignUpView: View {
         }
     }
     
-    // MARK: Input Validation
     private func validateFields() {
         errorMessage = ""
         
+        // Basic email format check
         if !email.contains("@") || !email.contains(".") {
             errorMessage = "Please enter a valid email address."
-        } else if password.isEmpty {
-            errorMessage = "Password cannot be empty."
+        } else if password.count < 6 {
+            errorMessage = "Password must be at least 6 characters long."
         } else {
-            navToProfileInfo = true
+            checkIfEmailExists()
+        }
+    }
+
+    private func checkIfEmailExists() {
+        let db = Firestore.firestore()
+        db.collection("users").whereField("email", isEqualTo: email).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                errorMessage = "Error: \(error.localizedDescription)"
+            } else if let documents = querySnapshot?.documents, !documents.isEmpty {
+                errorMessage = "This email is already in use."
+            } else {
+                // Proceed with signup
+                navToProfileInfo = true
+            }
         }
     }
 }
