@@ -138,11 +138,34 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		1D4757942CD0424800EB6B2A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B22366742CA3461C006F1B31 /* SuccessView.swift */,
+				B2168A7A2CAA4A0300119782 /* SignInFacebookHelper.swift */,
+				1D95CD192CCDB5880034A38D /* ProfileInformationView.swift */,
+				214E07192B91909900208E20 /* LandingPageView.swift */,
+				214E07172B91905700208E20 /* SignUpView.swift */,
+				214E071B2B9191E500208E20 /* LogInView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1D4757952CD0437E00EB6B2A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				21DA5A372BB8859D00047EA0 /* Fonts */,
+				2155DC1B2B901CF8007D6E3A /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		2155DC0B2B901CF6007D6E3A = {
 			isa = PBXGroup;
 			children = (
 				2155DC162B901CF6007D6E3A /* Authentic */,
 				1D4757912CCEF73B00EB6B2A /* GoogleService-Info.plist */,
+				B2A22B142CA399DE001DDF8B /* Authentic.entitlements */,
 				2155DC2C2B901CF8007D6E3A /* AuthenticTests */,
 				2155DC362B901CF8007D6E3A /* AuthenticUITests */,
 				2155DC152B901CF6007D6E3A /* Products */,
@@ -164,21 +187,12 @@
 			isa = PBXGroup;
 			children = (
 				2155DC172B901CF6007D6E3A /* AuthenticApp.swift */,
-				214E07192B91909900208E20 /* LandingPageView.swift */,
-				214E07172B91905700208E20 /* SignUpView.swift */,
-				214E071B2B9191E500208E20 /* LogInView.swift */,
-				B22366742CA3461C006F1B31 /* SuccessView.swift */,
-				B2168A7A2CAA4A0300119782 /* SignInFacebookHelper.swift */,
-				1D95CD192CCDB5880034A38D /* ProfileInformationView.swift */,
-				B2A22B142CA399DE001DDF8B /* Authentic.entitlements */,
-				B223666F2CA32CEA006F1B31 /* Utilities */,
-				B22366682CA32923006F1B31 /* AuthenticationManager.swift */,
-				B22366722CA342C3006F1B31 /* SignInGoogleHelper.swift */,
-				21DA5A382BB8875B00047EA0 /* Info.plist */,
-				21DA5A372BB8859D00047EA0 /* Fonts */,
-				2155DC1B2B901CF8007D6E3A /* Assets.xcassets */,
-				2155DC202B901CF8007D6E3A /* Persistence.swift */,
 				2155DC222B901CF8007D6E3A /* Authentic.xcdatamodeld */,
+				1D4757942CD0424800EB6B2A /* Views */,
+				B223666F2CA32CEA006F1B31 /* Utilities */,
+				21DA5A382BB8875B00047EA0 /* Info.plist */,
+				1D4757952CD0437E00EB6B2A /* Resources */,
+				2155DC202B901CF8007D6E3A /* Persistence.swift */,
 				2155DC1D2B901CF8007D6E3A /* Preview Content */,
 			);
 			path = Authentic;
@@ -228,6 +242,8 @@
 		B223666F2CA32CEA006F1B31 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				B22366682CA32923006F1B31 /* AuthenticationManager.swift */,
+				B22366722CA342C3006F1B31 /* SignInGoogleHelper.swift */,
 				B22366702CA32CFB006F1B31 /* Utilities.swift */,
 			);
 			path = Utilities;
