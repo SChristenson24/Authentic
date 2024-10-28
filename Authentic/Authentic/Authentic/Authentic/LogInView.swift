@@ -250,7 +250,7 @@ struct LoginView: View {
                                 }
                             }
                         }) {
-                            Image("fbicon").resizable().frame(width: 45, height: 45).clipShape(Circle())
+                            Image("fbicon").resizable().frame(width: 45, height: 45).clipShape(Circle()).shadow(radius: 2)
                         }
                         
                         Button(action: {
@@ -264,7 +264,7 @@ struct LoginView: View {
                                 }
                             }
                         }) {
-                            Image("appleicon").resizable().frame(width: 35, height: 35).clipShape(Circle())
+                            Image("appleicon").resizable().frame(width: 35, height: 35).clipShape(Circle()).shadow(radius: 2)
                         }
                         
                         Button(action: {

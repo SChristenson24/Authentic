@@ -1,5 +1,6 @@
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 
 struct SignUpView: View {
     @State private var email: String = ""
@@ -9,6 +10,7 @@ struct SignUpView: View {
     @State private var isLoading = false
     @Binding var isShowingSignup: Bool
     @Binding var showLogInView: Bool
+    @StateObject private var viewModel = LoginViewModel()  // Using the LoginViewModel for third-party auth
     
     var body: some View {
         NavigationStack {
@@ -86,6 +88,43 @@ struct SignUpView: View {
                                 .padding(.horizontal, 20)
                         }
                         
+                        // MARK: Third-Party Auth Buttons
+                        HStack(spacing: 30) {
+                            Button(action: {
+                                thirdPartySignInWithFacebook()
+                            }){
+                                Image("fbicon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 45, height: 45)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 2)
+                                    .padding(.bottom, 10)
+                            }
+                            Button(action: {
+                                thirdPartySignInWithApple()
+                            }){
+                                Image("appleicon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 2)
+                                    .padding(.bottom, 10)
+                            }
+                            Button(action: {
+                                thirdPartySignInWithGoogle()
+                            }){
+                                Image("googleicon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 2)
+                                    .padding(.bottom, 10)
+                            }
+                        }
+                        
                         Button(action: {
                             validateFields()
                         }) {
@@ -101,44 +140,6 @@ struct SignUpView: View {
                         .padding(.bottom, 10)
                         .navigationDestination(isPresented: $navToProfileInfo) {
                             ProfileInformationView(isThirdPartyAuth: false, email: email, password: password)
-                        }
-                        
-                        // MARK: Third-Party Auth Buttons
-                        HStack(spacing: 30) {
-                            Button(action: {
-                                // Add Facebook login logic here
-                            }){
-                                Image("fbicon")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 45, height: 45)
-                                    .clipShape(Circle())
-                                    .shadow(radius: 2)
-                                    .padding(.bottom, 10)
-                            }
-                            Button(action: {
-                                // Add Apple login logic here
-                            }){
-                                Image("appleicon")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 35, height: 35)
-                                    .clipShape(Circle())
-                                    .shadow(radius: 2)
-                                    .padding(.bottom, 10)
-                            }
-                            
-                            Button(action: {
-                                // Add Google login logic here
-                            }){
-                                Image("googleicon")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 35, height: 35)
-                                    .clipShape(Circle())
-                                    .shadow(radius: 2)
-                                    .padding(.bottom, 10)
-                            }
                         }
                         
                         HStack {
@@ -179,10 +180,73 @@ struct SignUpView: View {
             navToProfileInfo = true
         }
     }
-}
-
-struct SignUpView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignUpView(isShowingSignup: .constant(true), showLogInView: .constant(false))
+    
+    // MARK: Third-Party Sign-In Functions
+    private func thirdPartySignInWithFacebook() {
+        Task {
+            do {
+                try await viewModel.signInWithFacebook()
+                handleThirdPartyAuth()
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
+        }
+    }
+    
+    private func thirdPartySignInWithGoogle() {
+        Task {
+            do {
+                try await viewModel.signInGoogle()
+                handleThirdPartyAuth()
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
+        }
+    }
+    
+    private func thirdPartySignInWithApple() {
+        Task {
+            do {
+                try await viewModel.signInApple()
+                handleThirdPartyAuth()
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
+        }
+    }
+    
+    // MARK: Handle Third-Party Authentication Result
+    private func handleThirdPartyAuth() {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            self.errorMessage = "Could not retrieve user ID."
+            return
+        }
+        
+        let db = Firestore.firestore()
+        let userDocRef = db.collection("users").document(userID)
+        
+        userDocRef.getDocument { (document, error) in
+            if let error = error {
+                // Handle Firestore error
+                self.errorMessage = "Failed to retrieve user profile: \(error.localizedDescription)"
+            } else if let document = document, document.exists {
+                // User profile already exists, meaning they're fully signed up
+                self.navToProfileInfo = false
+                self.isShowingSignup = false
+                self.showLogInView = false
+            } else {
+                // User profile does not exist, navigate to ProfileInformationView
+                DispatchQueue.main.async {
+                    self.navToProfileInfo = true
+                }
+            }
+        }
+    }
+    
+    
+    struct SignUpView_Previews: PreviewProvider {
+        static var previews: some View {
+            SignUpView(isShowingSignup: .constant(true), showLogInView: .constant(false))
+        }
     }
 }
