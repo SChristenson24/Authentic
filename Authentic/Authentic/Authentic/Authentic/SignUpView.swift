@@ -1,12 +1,11 @@
 import SwiftUI
 import FirebaseAuth
-import FirebaseFirestore
 
 struct SignUpView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var navToProfileInfo = false
-    @State private var errorMessage = ""
+    @State private var errorMessage: String = ""
     @State private var isLoading = false
     @Binding var isShowingSignup: Bool
     @Binding var showLogInView: Bool
@@ -78,43 +77,6 @@ struct SignUpView: View {
                         .padding(.horizontal, 45)
                         .padding(.bottom, 20)
                         
-                        // MARK: Social Media Login Buttons
-                        HStack(spacing: 30) {
-                            Button(action: {
-                                // Add Facebook login logic here
-                            }) {
-                                Image("fbicon")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 45, height: 45)
-                                    .clipShape(Circle())
-                                    .shadow(radius: 2)
-                                    .padding(.bottom, 10)
-                            }
-                            Button(action: {
-                                // Add Apple login logic here
-                            }) {
-                                Image("appleicon")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 35, height: 35)
-                                    .clipShape(Circle())
-                                    .shadow(radius: 2)
-                                    .padding(.bottom, 10)
-                            }
-                            Button(action: {
-                                // Add Google login logic here
-                            }) {
-                                Image("googleicon")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 35, height: 35)
-                                    .clipShape(Circle())
-                                    .shadow(radius: 2)
-                                    .padding(.bottom, 10)
-                            }
-                        }
-                        
                         // MARK: Error Messages
                         if !errorMessage.isEmpty {
                             Text(errorMessage)
@@ -138,7 +100,45 @@ struct SignUpView: View {
                         .padding(.horizontal, 80)
                         .padding(.bottom, 10)
                         .navigationDestination(isPresented: $navToProfileInfo) {
-                            ProfileInformationView(email: email, password: password)
+                            ProfileInformationView(isThirdPartyAuth: false, email: email, password: password)
+                        }
+                        
+                        // MARK: Third-Party Auth Buttons
+                        HStack(spacing: 30) {
+                            Button(action: {
+                                // Add Facebook login logic here
+                            }){
+                                Image("fbicon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 45, height: 45)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 2)
+                                    .padding(.bottom, 10)
+                            }
+                            Button(action: {
+                                // Add Apple login logic here
+                            }){
+                                Image("appleicon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 2)
+                                    .padding(.bottom, 10)
+                            }
+                            
+                            Button(action: {
+                                // Add Google login logic here
+                            }){
+                                Image("googleicon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 2)
+                                    .padding(.bottom, 10)
+                            }
                         }
                         
                         HStack {
@@ -167,30 +167,16 @@ struct SignUpView: View {
         }
     }
     
+    // MARK: Input Validation
     private func validateFields() {
         errorMessage = ""
         
-        // Basic email format check
         if !email.contains("@") || !email.contains(".") {
             errorMessage = "Please enter a valid email address."
         } else if password.count < 6 {
-            errorMessage = "Password must be at least 6 characters long."
+            errorMessage = "Password must be at least 6 characters."
         } else {
-            checkIfEmailExists()
-        }
-    }
-
-    private func checkIfEmailExists() {
-        let db = Firestore.firestore()
-        db.collection("users").whereField("email", isEqualTo: email).getDocuments { (querySnapshot, error) in
-            if let error = error {
-                errorMessage = "Error: \(error.localizedDescription)"
-            } else if let documents = querySnapshot?.documents, !documents.isEmpty {
-                errorMessage = "This email is already in use."
-            } else {
-                // Proceed with signup
-                navToProfileInfo = true
-            }
+            navToProfileInfo = true
         }
     }
 }

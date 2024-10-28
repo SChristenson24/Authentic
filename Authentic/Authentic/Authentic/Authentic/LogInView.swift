@@ -320,7 +320,7 @@ struct LoginView: View {
             }
         }
         .fullScreenCover(isPresented: $isProfileSetupNeeded) {
-            ProfileInformationView(email: email, password: password)
+            ProfileInformationView(isThirdPartyAuth: false, email: email, password: password)
         }
         .fullScreenCover(isPresented: $viewModel.didSignInWithApple) {
             SuccessView() // Show success view if profile exists
