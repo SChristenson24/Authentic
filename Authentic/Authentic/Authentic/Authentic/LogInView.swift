@@ -140,6 +140,13 @@ extension UIViewController: ASAuthorizationControllerPresentationContextProvidin
     }
 }
 
+import SwiftUI
+import FirebaseAuth
+import FirebaseFirestore
+import FBSDKLoginKit
+import CryptoKit
+import AuthenticationServices
+
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
     @State private var email: String = ""
@@ -149,11 +156,8 @@ struct LoginView: View {
     @State private var error: String = ""
     @State private var isProfileSetupNeeded = false
     @State private var isLoggedIn: Bool = false
-    @State private var isThirdPartyAuth = false
     @Binding var showLogInView: Bool
     @Binding var isShowingSignup: Bool
-    
-
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -168,8 +172,7 @@ struct LoginView: View {
                     .edgesIgnoringSafeArea(.bottom)
                 
                 VStack {
-                    Spacer()
-                    
+                    // MARK: Log In Text
                     Text("Log In")
                         .font(.custom("Lexend-Bold", size: 35))
                         .padding(.bottom, 30)
@@ -177,6 +180,7 @@ struct LoginView: View {
                         .foregroundColor(Color("darkgray"))
                         .padding(.trailing, 200)
                     
+                    // MARK: Email Field
                     Text("Email")
                         .font(.custom("Lexend-Light", size: 14))
                         .padding(.top, -10)
@@ -198,6 +202,7 @@ struct LoginView: View {
                     .shadow(radius: 1)
                     .padding(.horizontal, 45)
                     
+                    // MARK: Password Field
                     Text("Password")
                         .font(.custom("Lexend-Light", size: 14))
                         .padding(.top, 25)
@@ -220,14 +225,14 @@ struct LoginView: View {
                     .padding(.horizontal, 45)
                     .padding(.bottom, 20)
                     
-                    // MARK: Reset Button
+                    // MARK: Reset Password Button
                     Button("Reset password?", action: {})
                         .font(.custom("Lexend-Regular", size: 12))
                         .foregroundColor(Color("bpink"))
                         .padding(.top, -20)
                         .padding(.leading, 175)
                     
-                    // MARK: Auth Buttons
+                    // MARK: Error Messages
                     if !error.isEmpty {
                         Text(error)
                             .foregroundColor(.red)
@@ -238,50 +243,67 @@ struct LoginView: View {
                             .padding(.bottom, 20)
                     }
                     
+                    // MARK: Third-Party Auth Buttons
                     HStack(spacing: 30) {
                         Button(action: {
                             Task {
                                 do {
                                     try await viewModel.signInWithFacebook()
-                                    isThirdPartyAuth = true
                                     isProfileSetupNeeded = !viewModel.didSignInWithApple
                                 } catch {
                                     self.error = error.localizedDescription
                                 }
                             }
                         }) {
-                            Image("fbicon").resizable().frame(width: 45, height: 45).clipShape(Circle()).shadow(radius: 2)
+                            Image("fbicon")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 45, height: 45)
+                                .clipShape(Circle())
+                                .shadow(radius: 2)
+                                .padding(.bottom, 10)
                         }
                         
                         Button(action: {
                             Task {
                                 do {
                                     try await viewModel.signInApple()
-                                    isThirdPartyAuth = true
                                     isProfileSetupNeeded = !viewModel.didSignInWithApple
                                 } catch {
                                     print(error)
                                 }
                             }
                         }) {
-                            Image("appleicon").resizable().frame(width: 35, height: 35).clipShape(Circle()).shadow(radius: 2)
+                            Image("appleicon")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
+                                .clipShape(Circle())
+                                .shadow(radius: 2)
+                                .padding(.bottom, 10)
                         }
                         
                         Button(action: {
                             Task {
                                 do {
                                     try await viewModel.signInGoogle()
-                                    isThirdPartyAuth = true
                                     isProfileSetupNeeded = !viewModel.didSignInWithApple
                                 } catch {
                                     print(error)
                                 }
                             }
                         }) {
-                            Image("googleicon").resizable().frame(width: 35, height: 35).clipShape(Circle())
+                            Image("googleicon")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
+                                .clipShape(Circle())
+                                .shadow(radius: 2)
+                                .padding(.bottom, 10)
                         }
                     }
                     
+                    // MARK: Log In Button
                     Button(action: {
                         signIn()
                     }) {
@@ -296,6 +318,7 @@ struct LoginView: View {
                     .padding(.horizontal, 80)
                     .padding(.bottom, 10)
                     
+                    // MARK: Sign Up Link
                     HStack {
                         Text("Don't have an account?")
                             .font(.custom("Lexend-Light", size: 14))
