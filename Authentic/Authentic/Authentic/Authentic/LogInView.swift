@@ -7,127 +7,138 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 import FBSDKLoginKit
 import CryptoKit
 import AuthenticationServices
 
-
-public struct SignInWithAppleResult{
+public struct SignInWithAppleResult {
     let token: String
     let nonce: String
-    
 }
 
 @MainActor
-final class LoginViewModel: NSObject, ObservableObject{
+final class LoginViewModel: NSObject, ObservableObject {
     private var currentNonce: String?
     public var didSignInWithApple: Bool = false
-    
-   
-    
-    func singInGoogle() async throws{
-       
+
+    func signInGoogle() async throws {
         let helper = SignInGoogleHelper()
         let tokens = try await helper.signIn()
         try await AuthenticationManager.shared.signInWithGoogle(tokens: tokens)
-        
+        checkUserProfileExists()
     }
+
     func signInWithFacebook() async throws {
-            let helper = SignInFacebookHelper()
-            let tokens = try await helper.signIn()
-            try await AuthenticationManager.shared.signInWithFacebook(tokens: tokens)
-        }
-    func signInApple() async throws{
+        let helper = SignInFacebookHelper()
+        let tokens = try await helper.signIn()
+        try await AuthenticationManager.shared.signInWithFacebook(tokens: tokens)
+        checkUserProfileExists()
+    }
+
+    func signInApple() async throws {
         startSignInWithAppleFlow()
     }
-    
+
     func startSignInWithAppleFlow() {
-        guard let TopVC = Utilities.shared.topViewController() else {
-            return
+        guard let topVC = Utilities.shared.topViewController() else { return }
+        
+        let nonce = randomNonceString()
+        currentNonce = nonce
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = sha256(nonce)
+
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = topVC
+        authorizationController.performRequests()
+    }
+
+    private func checkUserProfileExists() {
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        let db = Firestore.firestore()
+        
+        db.collection("users").document(userID).getDocument { (document, error) in
+            if let document = document, document.exists {
+                // User profile exists, so we set didSignInWithApple to true to trigger SuccessView
+                DispatchQueue.main.async {
+                    self.didSignInWithApple = true
+                }
+            } else {
+                // User profile does not exist, navigate to ProfileInformationView
+                DispatchQueue.main.async {
+                    self.didSignInWithApple = false // This will trigger profile setup in LoginView
+                }
+            }
         }
-      let nonce = randomNonceString()
-      currentNonce = nonce
-      let appleIDProvider = ASAuthorizationAppleIDProvider()
-      let request = appleIDProvider.createRequest()
-      request.requestedScopes = [.fullName, .email]
-      request.nonce = sha256(nonce)
-
-      let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-      authorizationController.delegate = self
-      authorizationController.presentationContextProvider = TopVC
-      authorizationController.performRequests()
     }
-    
+
     private func randomNonceString(length: Int = 32) -> String {
-      precondition(length > 0)
-      var randomBytes = [UInt8](repeating: 0, count: length)
-      let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
-      if errorCode != errSecSuccess {
-        fatalError(
-          "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
-        )
-      }
+        precondition(length > 0)
+        var randomBytes = [UInt8](repeating: 0, count: length)
+        let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
+        if errorCode != errSecSuccess {
+            fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
+        }
 
-      let charset: [Character] =
-        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        let charset: [Character] =
+            Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
 
-      let nonce = randomBytes.map { byte in
-        // Pick a random character from the set, wrapping around if needed.
-        charset[Int(byte) % charset.count]
-      }
+        let nonce = randomBytes.map { byte in
+            charset[Int(byte) % charset.count]
+        }
 
-      return String(nonce)
+        return String(nonce)
     }
-    
+
     @available(iOS 13, *)
     private func sha256(_ input: String) -> String {
-      let inputData = Data(input.utf8)
-      let hashedData = SHA256.hash(data: inputData)
-      let hashString = hashedData.compactMap {
-        String(format: "%02x", $0)
-      }.joined()
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+            String(format: "%02x", $0)
+        }.joined()
 
-      return hashString
+        return hashString
     }
 }
 
 extension LoginViewModel: ASAuthorizationControllerDelegate {
-    
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard
             let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
             let appleIDToken = appleIDCredential.identityToken,
             let idTokenString = String(data: appleIDToken, encoding: .utf8),
-                let nonce = currentNonce
+            let nonce = currentNonce
         else {
-            print("error")
+            print("Error during Apple authentication")
             return
         }
         
         let tokens = SignInWithAppleResult(token: idTokenString, nonce: nonce)
-    
-    Task {
-        do {
-            try await AuthenticationManager.shared.signInWithApple(tokens: tokens)
-            didSignInWithApple = true
-        } catch {
-            print("Sign in with apple failed: \(error.localizedDescription)")
+        
+        Task {
+            do {
+                try await AuthenticationManager.shared.signInWithApple(tokens: tokens)
+                checkUserProfileExists()  // Check if the user has a profile in Firestore
+            } catch {
+                print("Sign in with Apple failed: \(error.localizedDescription)")
+            }
         }
     }
-}
+    
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        // Handle error.
         print("Sign in with Apple errored: \(error)")
     }
-    
 }
 
-extension UIViewController: ASAuthorizationControllerPresentationContextProviding{
+extension UIViewController: ASAuthorizationControllerPresentationContextProviding {
     public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
 }
-
 
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
@@ -136,11 +147,14 @@ struct LoginView: View {
     @State private var showingSignUp = false
     @State private var isLoading = false
     @State private var error: String = ""
-    @State private var isLoggedIn = false
+    @State private var isProfileSetupNeeded = false
+    @State private var isLoggedIn: Bool = false
+    @State private var isThirdPartyAuth = false
     @Binding var showLogInView: Bool
     @Binding var isShowingSignup: Bool
-
     
+
+
     var body: some View {
         ZStack(alignment: .top) {
             Color("lpink").edgesIgnoringSafeArea(.all)
@@ -191,7 +205,7 @@ struct LoginView: View {
                         .padding(.trailing, 235)
                         .foregroundColor(Color.gray)
                     
-                    HStack{
+                    HStack {
                         Image(systemName: "key.fill")
                             .foregroundColor(.gray)
                             .padding(.leading, 2)
@@ -206,79 +220,65 @@ struct LoginView: View {
                     .padding(.horizontal, 45)
                     .padding(.bottom, 20)
                     
-                    // MARK: RESET BUTTON
+                    // MARK: Reset Button
                     Button("Reset password?", action: {})
                         .font(.custom("Lexend-Regular", size: 12))
                         .foregroundColor(Color("bpink"))
                         .padding(.top, -20)
                         .padding(.leading, 175)
                     
-                    //MARK: AUTH BUTTONS
-                    if !error.isEmpty{
+                    // MARK: Auth Buttons
+                    if !error.isEmpty {
                         Text(error)
                             .foregroundColor(.red)
                             .padding(.bottom, 10)
                     }
-                    if isLoading{
+                    if isLoading {
                         ProgressView()
                             .padding(.bottom, 20)
                     }
+                    
                     HStack(spacing: 30) {
                         Button(action: {
                             Task {
                                 do {
                                     try await viewModel.signInWithFacebook()
-                                    isLoggedIn = true
+                                    isThirdPartyAuth = true
+                                    isProfileSetupNeeded = !viewModel.didSignInWithApple
                                 } catch {
                                     self.error = error.localizedDescription
                                 }
                             }
-                        }){
-                            Image("fbicon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 45, height: 45)
-                                .clipShape(Circle())
-                                .shadow(radius: 2)
-                                .padding(.bottom, 10)
+                        }) {
+                            Image("fbicon").resizable().frame(width: 45, height: 45).clipShape(Circle())
                         }
+                        
                         Button(action: {
                             Task {
                                 do {
                                     try await viewModel.signInApple()
-                                    isLoggedIn = true
+                                    isThirdPartyAuth = true
+                                    isProfileSetupNeeded = !viewModel.didSignInWithApple
                                 } catch {
                                     print(error)
                                 }
                             }
-                        }){
-                            Image("appleicon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 35, height: 35)
-                                .clipShape(Circle())
-                                .shadow(radius: 2)
-                                .padding(.bottom, 10)
+                        }) {
+                            Image("appleicon").resizable().frame(width: 35, height: 35).clipShape(Circle())
                         }
                         
                         Button(action: {
-                            Task{
-                                do{
-                                    try await viewModel.singInGoogle()
-                                    isLoggedIn = true
-                                    
+                            Task {
+                                do {
+                                    try await viewModel.signInGoogle()
+                                    isThirdPartyAuth = true
+                                    isProfileSetupNeeded = !viewModel.didSignInWithApple
                                 } catch {
                                     print(error)
                                 }
                             }
-                        }){
-                            Image("googleicon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 35, height: 35)
-                                .clipShape(Circle())
-                                .shadow(radius: 2)
-                                .padding(.bottom, 10)
+                        }) {
+                            Image("googleicon").resizable().frame(width: 35, height: 35).clipShape(Circle())
                         }
                     }
                     
@@ -319,14 +319,13 @@ struct LoginView: View {
                 .shadow(radius: 5)
             }
         }
-
-        .fullScreenCover(isPresented: $isLoggedIn)
-        {
-            SuccessView() //********WILL NEED UPDATED APPROPRIATELY**********
+        .fullScreenCover(isPresented: $isProfileSetupNeeded) {
+            ProfileInformationView(email: email, password: password)
+        }
+        .fullScreenCover(isPresented: $viewModel.didSignInWithApple) {
+            SuccessView() // Show success view if profile exists
         }
     }
-    
-    
     
     func signIn() {
         isLoading = true
@@ -341,17 +340,9 @@ struct LoginView: View {
                     return
                 }
                 
+                self.isProfileSetupNeeded = false
                 self.isLoggedIn = true
-                
             }
         }
     }
 }
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView(showLogInView: .constant(true), isShowingSignup: .constant(false))
-    }
-}
-
-
