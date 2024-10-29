@@ -138,6 +138,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		1D8D16B92CD141CD00836235 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2155DC172B901CF6007D6E3A /* AuthenticApp.swift */,
+				214E07192B91909900208E20 /* LandingPageView.swift */,
+				214E07172B91905700208E20 /* SignUpView.swift */,
+				214E071B2B9191E500208E20 /* LogInView.swift */,
+				B22366742CA3461C006F1B31 /* SuccessView.swift */,
+				B2168A7A2CAA4A0300119782 /* SignInFacebookHelper.swift */,
+				1D95CD192CCDB5880034A38D /* ProfileInformationView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		2155DC0B2B901CF6007D6E3A = {
 			isa = PBXGroup;
 			children = (
@@ -163,13 +177,7 @@
 		2155DC162B901CF6007D6E3A /* Authentic */ = {
 			isa = PBXGroup;
 			children = (
-				2155DC172B901CF6007D6E3A /* AuthenticApp.swift */,
-				214E07192B91909900208E20 /* LandingPageView.swift */,
-				214E07172B91905700208E20 /* SignUpView.swift */,
-				214E071B2B9191E500208E20 /* LogInView.swift */,
-				B22366742CA3461C006F1B31 /* SuccessView.swift */,
-				B2168A7A2CAA4A0300119782 /* SignInFacebookHelper.swift */,
-				1D95CD192CCDB5880034A38D /* ProfileInformationView.swift */,
+				1D8D16B92CD141CD00836235 /* Views */,
 				B2A22B142CA399DE001DDF8B /* Authentic.entitlements */,
 				B223666F2CA32CEA006F1B31 /* Utilities */,
 				B22366682CA32923006F1B31 /* AuthenticationManager.swift */,
