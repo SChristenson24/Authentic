@@ -20,27 +20,50 @@ public struct SignInWithAppleResult {
 @MainActor
 final class LoginViewModel: NSObject, ObservableObject {
     private var currentNonce: String?
-    public var didSignInWithApple: Bool = false
+    @Published var didSignInWithApple = false
+    @Published var errorMessage: String? = nil
 
+    // MARK: - Google Sign-In
     func signInGoogle() async throws {
         let helper = SignInGoogleHelper()
         let tokens = try await helper.signIn()
         try await AuthenticationManager.shared.signInWithGoogle(tokens: tokens)
-        checkUserProfileExists()
     }
 
+    // MARK: - Facebook Sign-In
     func signInWithFacebook() async throws {
-        let helper = SignInFacebookHelper()
-        let tokens = try await helper.signIn()
-        try await AuthenticationManager.shared.signInWithFacebook(tokens: tokens)
-        checkUserProfileExists()
+        let loginManager = LoginManager()
+        
+        // Use async `withCheckedThrowingContinuation` to handle Facebook login
+        let result: LoginManagerLoginResult = try await withCheckedThrowingContinuation { continuation in
+            loginManager.logIn(permissions: ["public_profile", "email"], from: nil) { result, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else if let result = result, result.isCancelled {
+                    continuation.resume(throwing: NSError(domain: "FacebookLoginError", code: 1, userInfo: [NSLocalizedDescriptionKey: "User cancelled login."]))
+                } else if let result = result {
+                    continuation.resume(returning: result)
+                } else {
+                    continuation.resume(throwing: NSError(domain: "FacebookLoginError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Unknown login error."]))
+                }
+            }
+        }
+        
+        // Retrieve the access token and sign in with Firebase
+        guard let tokenString = result.token?.tokenString else {
+            throw NSError(domain: "FacebookLoginError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to get Facebook access token."])
+        }
+        
+        let credential = FacebookAuthProvider.credential(withAccessToken: tokenString)
+        try await Auth.auth().signIn(with: credential)
     }
 
+    // MARK: - Apple Sign-In
     func signInApple() async throws {
         startSignInWithAppleFlow()
     }
 
-    func startSignInWithAppleFlow() {
+    private func startSignInWithAppleFlow() {
         guard let topVC = Utilities.shared.topViewController() else { return }
         
         let nonce = randomNonceString()
@@ -56,25 +79,26 @@ final class LoginViewModel: NSObject, ObservableObject {
         authorizationController.performRequests()
     }
 
-    private func checkUserProfileExists() {
-        guard let userID = Auth.auth().currentUser?.uid else { return }
+    // MARK: - Profile Check
+    func checkUserProfileExists(completion: @escaping (Bool, Error?) -> Void) {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            completion(false, NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No user ID found"]))
+            return
+        }
+
         let db = Firestore.firestore()
-        
-        db.collection("users").document(userID).getDocument { (document, error) in
-            if let document = document, document.exists {
-                // User profile exists, so we set didSignInWithApple to true to trigger SuccessView
-                DispatchQueue.main.async {
-                    self.didSignInWithApple = true
-                }
+        db.collection("users").document(userID).getDocument { document, error in
+            if let error = error {
+                completion(false, error)
+            } else if document?.exists == true {
+                completion(true, nil)
             } else {
-                // User profile does not exist, navigate to ProfileInformationView
-                DispatchQueue.main.async {
-                    self.didSignInWithApple = false // This will trigger profile setup in LoginView
-                }
+                completion(false, nil)
             }
         }
     }
 
+    // MARK: - Helper Methods
     private func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
         var randomBytes = [UInt8](repeating: 0, count: length)
@@ -83,13 +107,10 @@ final class LoginViewModel: NSObject, ObservableObject {
             fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
         }
 
-        let charset: [Character] =
-            Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-
+        let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
         let nonce = randomBytes.map { byte in
             charset[Int(byte) % charset.count]
         }
-
         return String(nonce)
     }
 
@@ -97,10 +118,7 @@ final class LoginViewModel: NSObject, ObservableObject {
     private func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashedData = SHA256.hash(data: inputData)
-        let hashString = hashedData.compactMap {
-            String(format: "%02x", $0)
-        }.joined()
-
+        let hashString = hashedData.compactMap { String(format: "%02x", $0) }.joined()
         return hashString
     }
 }
@@ -122,7 +140,6 @@ extension LoginViewModel: ASAuthorizationControllerDelegate {
         Task {
             do {
                 try await AuthenticationManager.shared.signInWithApple(tokens: tokens)
-                checkUserProfileExists()  // Check if the user has a profile in Firestore
             } catch {
                 print("Sign in with Apple failed: \(error.localizedDescription)")
             }
@@ -131,6 +148,7 @@ extension LoginViewModel: ASAuthorizationControllerDelegate {
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("Sign in with Apple errored: \(error)")
+        errorMessage = "Sign in with Apple failed"
     }
 }
 
@@ -143,19 +161,15 @@ extension UIViewController: ASAuthorizationControllerPresentationContextProvidin
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
-import FBSDKLoginKit
-import CryptoKit
-import AuthenticationServices
 
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
     @State private var email: String = ""
     @State private var password: String = ""
-    @State private var showingSignUp = false
+    @State private var errorMessage: String = ""
     @State private var isLoading = false
-    @State private var error: String = ""
     @State private var isProfileSetupNeeded = false
-    @State private var isLoggedIn: Bool = false
+    @State private var isLoginSuccessful = false
     @Binding var showLogInView: Bool
     @Binding var isShowingSignup: Bool
 
@@ -225,18 +239,13 @@ struct LoginView: View {
                     .padding(.horizontal, 45)
                     .padding(.bottom, 20)
                     
-                    // MARK: Reset Password Button
-                    Button("Reset password?", action: {})
-                        .font(.custom("Lexend-Regular", size: 12))
-                        .foregroundColor(Color("bpink"))
-                        .padding(.top, -20)
-                        .padding(.leading, 175)
-                    
                     // MARK: Error Messages
-                    if !error.isEmpty {
-                        Text(error)
-                            .foregroundColor(.red)
-                            .padding(.bottom, 10)
+                    if !errorMessage.isEmpty {
+                        Text(errorMessage)
+                            .foregroundColor(Color("bpink"))
+                            .font(.custom("Lexend-Regular", size: 14))
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 20)
                     }
                     if isLoading {
                         ProgressView()
@@ -245,16 +254,7 @@ struct LoginView: View {
                     
                     // MARK: Third-Party Auth Buttons
                     HStack(spacing: 30) {
-                        Button(action: {
-                            Task {
-                                do {
-                                    try await viewModel.signInWithFacebook()
-                                    isProfileSetupNeeded = !viewModel.didSignInWithApple
-                                } catch {
-                                    self.error = error.localizedDescription
-                                }
-                            }
-                        }) {
+                        Button(action: { thirdPartyLoginWithFacebook() }) {
                             Image("fbicon")
                                 .resizable()
                                 .scaledToFit()
@@ -263,17 +263,7 @@ struct LoginView: View {
                                 .shadow(radius: 2)
                                 .padding(.bottom, 10)
                         }
-                        
-                        Button(action: {
-                            Task {
-                                do {
-                                    try await viewModel.signInApple()
-                                    isProfileSetupNeeded = !viewModel.didSignInWithApple
-                                } catch {
-                                    print(error)
-                                }
-                            }
-                        }) {
+                        Button(action: { thirdPartyLoginWithApple() }) {
                             Image("appleicon")
                                 .resizable()
                                 .scaledToFit()
@@ -282,17 +272,7 @@ struct LoginView: View {
                                 .shadow(radius: 2)
                                 .padding(.bottom, 10)
                         }
-                        
-                        Button(action: {
-                            Task {
-                                do {
-                                    try await viewModel.signInGoogle()
-                                    isProfileSetupNeeded = !viewModel.didSignInWithApple
-                                } catch {
-                                    print(error)
-                                }
-                            }
-                        }) {
+                        Button(action: { thirdPartyLoginWithGoogle() }) {
                             Image("googleicon")
                                 .resizable()
                                 .scaledToFit()
@@ -304,9 +284,7 @@ struct LoginView: View {
                     }
                     
                     // MARK: Log In Button
-                    Button(action: {
-                        signIn()
-                    }) {
+                    Button(action: { loginUser() }) {
                         Text("Log In")
                             .font(.custom("Lexend-Regular", size: 16))
                             .frame(maxWidth: .infinity)
@@ -323,9 +301,7 @@ struct LoginView: View {
                         Text("Don't have an account?")
                             .font(.custom("Lexend-Light", size: 14))
                             .foregroundColor(Color.gray)
-                        Button(action: {
-                            isShowingSignup = true
-                        }) {
+                        Button(action: { isShowingSignup = true }) {
                             Text("Sign Up")
                                 .font(.custom("Lexend-SemiBold", size: 14))
                                 .foregroundColor(Color("bpink"))
@@ -345,27 +321,106 @@ struct LoginView: View {
         .fullScreenCover(isPresented: $isProfileSetupNeeded) {
             ProfileInformationView(isThirdPartyAuth: false, email: email, password: password)
         }
-        .fullScreenCover(isPresented: $viewModel.didSignInWithApple) {
-            SuccessView() // Show success view if profile exists
+        .fullScreenCover(isPresented: $isLoginSuccessful) {
+            SuccessView()
         }
     }
     
-    func signIn() {
+    private func loginUser() {
+        // Check if email or password is empty
+        if email.isEmpty {
+            errorMessage = "Please enter an email address."
+            return
+        }
+        
+        if password.isEmpty {
+            errorMessage = "Please enter a password."
+            return
+        }
+
+        // Reset error message and show loading indicator
         isLoading = true
-        error = ""
+        errorMessage = ""
         
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             DispatchQueue.main.async {
                 self.isLoading = false
                 
-                if let error = error {
-                    self.error = error.localizedDescription
+                if let error = error as NSError? {
+                    // Check Firebase error codes by directly using error.code
+                    switch error.code {
+                    case AuthErrorCode.userNotFound.rawValue:
+                        self.errorMessage = "The email does not belong to an account."
+                    case AuthErrorCode.wrongPassword.rawValue:
+                        self.errorMessage = "The password is incorrect. Please try again."
+                    default:
+                        self.errorMessage = error.localizedDescription
+                    }
                     return
                 }
                 
+                // If no error, proceed to profile check or success view
+                self.checkUserProfileExists()
+            }
+        }
+    }
+
+
+    private func thirdPartyLoginWithFacebook() {
+        Task {
+            do {
+                try await viewModel.signInWithFacebook()
+                checkUserProfileExists()
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
+        }
+    }
+    
+    private func thirdPartyLoginWithGoogle() {
+        Task {
+            do {
+                try await viewModel.signInGoogle()
+                checkUserProfileExists()
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
+        }
+    }
+    
+    private func thirdPartyLoginWithApple() {
+        Task {
+            do {
+                try await viewModel.signInApple()
+                checkUserProfileExists()
+            } catch {
+                self.errorMessage = error.localizedDescription
+            }
+        }
+    }
+    
+    private func checkUserProfileExists() {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            self.errorMessage = "Could not retrieve user ID."
+            return
+        }
+        
+        let db = Firestore.firestore()
+        let userDocRef = db.collection("users").document(userID)
+
+        userDocRef.getDocument { (document, error) in
+            if let error = error {
+                self.errorMessage = "Error fetching profile: \(error.localizedDescription)"
+            } else if let document = document, document.exists {
+                // Profile exists, go to success view
                 self.isProfileSetupNeeded = false
-                self.isLoggedIn = true
+                self.isLoginSuccessful = true
+            } else {
+                // Profile does not exist, proceed to setup
+                self.isProfileSetupNeeded = true
             }
         }
     }
 }
+
+

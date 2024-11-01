@@ -10,7 +10,7 @@ struct SignUpView: View {
     @State private var isLoading = false
     @Binding var isShowingSignup: Bool
     @Binding var showLogInView: Bool
-    @StateObject private var viewModel = LoginViewModel() // Using the ViewModel for third-party auth
+    @StateObject private var viewModel = LoginViewModel()
 
     var body: some View {
         NavigationStack {
