@@ -1,9 +1,8 @@
 import SwiftUI
 
-
-
 struct LandingPageView: View {
-    @State private var showingSignUp = false
+    @State private var isShowingSignup = true
+    @State private var isPresented = false
     
     private let quotes = [
         "Your space for real connections, real stories, and real empowerment. Be you, be Authentic.",
@@ -19,7 +18,7 @@ struct LandingPageView: View {
     var body: some View {
         ZStack {
             Color("lpink").edgesIgnoringSafeArea(.all)
-            
+            // MARK: Title
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
@@ -42,10 +41,13 @@ struct LandingPageView: View {
                     .scaledToFit()
                     .frame(width: 390, height: 550)
                     .padding(.top, -90)
-                
+                // MARK: Quote Logic
                 TabView(selection: $currentQuoteIndex) {
                     ForEach(0..<quotes.count, id: \.self) { index in
                         Text(self.quotes[index])
+                            .font(.custom("Lexend-Light", size: 14))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(Color("darkgray"))
                             .tabItem { EmptyView() }
                             .tag(index)
                     }
@@ -57,17 +59,18 @@ struct LandingPageView: View {
                         currentQuoteIndex = (currentQuoteIndex + 1) % quotes.count
                     }
                 }
-                
+                // MARK: Get Started Button
                 Button(action: {
-                    showingSignUp.toggle()
+                    isPresented.toggle()
                 }) {
                     Text("Get Started")
-                        .foregroundColor(.white)
+                        .font(.custom("Lexend-Regular", size: 16))
                         .padding()
+                        .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
-                        .background(Color("lighterpink"))
+                        .background(Color("bpink"))
                         .cornerRadius(25)
-                        .padding(.horizontal, 50)
+                        .padding(.horizontal, 80)
                 }
                 Spacer()
             }
@@ -75,9 +78,18 @@ struct LandingPageView: View {
         .onAppear {
             _ = self.timer
         }
-        
-        .fullScreenCover(isPresented: $showingSignUp) {
-            SignUpView()
+        // MARK: View Showing Logic
+        .fullScreenCover(isPresented: $isPresented) {
+            ZStack {
+                if isShowingSignup {
+                    SignUpView(isShowingSignup: $isShowingSignup, showLogInView: $isPresented)
+                        .transition(.move(edge: .trailing))
+                } else {
+                    LoginView(showLogInView: $isPresented, isShowingSignup: $isShowingSignup)
+                        .transition(.move(edge: .leading))
+                }
+            }
+            .animation(.easeInOut, value: isShowingSignup)
         }
     }
 }
