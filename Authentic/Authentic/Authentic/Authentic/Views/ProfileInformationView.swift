@@ -128,7 +128,7 @@ struct ProfileInformationView: View {
                     .edgesIgnoringSafeArea(.bottom)
                 }
                 .navigationDestination(isPresented: $navToSuccess) {
-                    SuccessView()
+                    DashboardView()
                 }
                 .navigationBarBackButtonHidden(true)
             }
