@@ -61,24 +61,24 @@ struct HomeView: View {
                                 VStack {
                                     ZStack {
                                         Circle()
-                                            .fill(Color.pink)
-                                            .frame(width: 90, height: 90)
+                                            .fill(Color("bpink"))
+                                            .frame(width: 75, height: 75)
                                         // you to be replaced by actual user
                                         Image("you")
                                             .resizable()
                                             .scaledToFill()
-                                            .frame(width: 90, height: 90)
+                                            .frame(width: 70, height: 70)
                                             .clipShape(Circle())
-                                            .overlay(
-                                                Circle()
-                                                    .stroke(Color.pink, lineWidth: 3)
-                                            )
+                                            //.overlay(
+                                               // Circle()
+                                                    //.stroke(Color.pink, lineWidth: 1)
+                                           // )
                                         
                                         if index == 0 {
                                             Text("+")
                                                 .font(.system(size: 30))
                                                 .foregroundColor(.black)
-                                                .offset(x: 30, y: 33)
+                                                .offset(x: 25, y: 24)
                                         }
                                     }
                                     
