@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct NotificationsView: View {
+    let userid = Auth.auth().currentUser?.uid ?? ""
     var body: some View {
         VStack {
             Text("Notification Page")

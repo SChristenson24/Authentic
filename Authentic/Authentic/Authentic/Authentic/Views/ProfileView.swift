@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 
 struct ProfileView: View {
     @State private var isExpanded = false
     @State private var selectedTab: String = "All"
     @StateObject private var userViewModel = ViewModel()
+    @State private var showSettings = false
+    let userid = Auth.auth().currentUser?.uid ?? ""
 
     var body: some View {
         ZStack {
@@ -30,19 +33,8 @@ struct ProfileView: View {
                 VStack {
                     Spacer()
                     ZStack {
-                        Circle()
-                            .fill(Color.pink)
-                            .frame(width: iconSize, height: iconSize)
-                        
-                        Image("you")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: iconSize, height: iconSize)
-                            .clipShape(Circle())
-                            .overlay(
-                                Circle()
-                                    .stroke(Color.pink, lineWidth: 3)
-                            )
+                        ProfilePictureView(userId: userid)
+                            .padding(.top, 50)
                         
                         HStack(spacing: 160) {
                             VStack {
@@ -64,14 +56,25 @@ struct ProfileView: View {
                         }
                         .padding(.horizontal, 10)
                         .padding(.top, 50)
+                    }
                         
-                        HStack {
-                            Button(action: {}) {
+                    HStack {
+                        Spacer()
+                        
+                        NavigationView {
+                            Button(action: {
+                                showSettings = true
+                            }) {
                                 Image(systemName: "gearshape")
                                     .foregroundColor(.gray)
                                     .font(.system(size: 20))
+                                    .padding()
+                            }
+                            .fullScreenCover(isPresented: $showSettings) {
+                                SettingsView()
                             }
                         }
+                    }
                         .padding(.top, 44)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .padding(.horizontal, 15)
@@ -85,7 +88,6 @@ struct ProfileView: View {
                                 .foregroundStyle(.gray)
                         }
                         .padding(.top, iconSize + 20)
-                    }
                     .frame(height: iconSize + 80)
                     .offset(y: -iconOffset)
                     .padding(.bottom, 10)
