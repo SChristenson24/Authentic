@@ -41,6 +41,7 @@ struct PersonalDetailsView: View {
                 detailRow(label: "First Name", value: userViewModel.firstName)
                 detailRow(label: "Last Name", value: userViewModel.lastName)
                 detailRow(label: "Email", value: userViewModel.email)
+                detailRow(label: "Bio", value: userViewModel.email)
             }
             .padding()
             .background(Color("lightgray"))

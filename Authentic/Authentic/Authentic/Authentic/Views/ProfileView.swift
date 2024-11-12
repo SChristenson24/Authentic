@@ -83,7 +83,7 @@ struct ProfileView: View {
                             Text(userViewModel.firstName + " " + userViewModel.lastName)
                                 .font(.custom("Lexend", size: 15))
                                 .padding(.top, 50)
-                            Text("Just for fun.")
+                            Text(userViewModel.bio)
                                 .font(.custom("Lexend", size: 13))
                                 .foregroundStyle(.gray)
                         }

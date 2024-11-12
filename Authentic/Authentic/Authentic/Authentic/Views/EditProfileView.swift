@@ -14,6 +14,13 @@ struct EditProfileView: View {
     @State private var newValue: String
     var fieldLabel: String
     let userId: String
+    let fieldMapping: [String: String] = [
+        "First Name": "firstName",
+        "Last Name": "lastName",
+        "Username": "username",
+        "Email": "email",
+        "Bio": "bio"
+    ]
     
     init(fieldLabel: String, currentValue: String, userId: String) {
         self.fieldLabel = fieldLabel
@@ -52,14 +59,18 @@ struct EditProfileView: View {
         
         let db = Firestore.firestore()
         
-        // Update the field in Firestore
-        db.collection("users").document(userId).updateData([fieldLabel.lowercased(): newValue]) { error in
-            if let error = error {
-                print("Error updating \(fieldLabel): \(error.localizedDescription)")
-            } else {
-                print("\(fieldLabel) updated successfully.")
-                presentationMode.wrappedValue.dismiss()
+        // Get the correct Firestore field name based on fieldLabel
+        if let firestoreField = fieldMapping[fieldLabel] {
+            db.collection("users").document(userId).updateData([firestoreField: newValue]) { error in
+                if let error = error {
+                    print("Error updating \(fieldLabel): \(error.localizedDescription)")
+                } else {
+                    print("\(fieldLabel) updated successfully.")
+                    presentationMode.wrappedValue.dismiss()
+                }
             }
+        } else {
+            print("No matching Firestore field found for \(fieldLabel)")
         }
     }
 }

@@ -15,6 +15,7 @@ class ViewModel: ObservableObject {
     @Published var lastName: String = ""
     @Published var email: String = ""
     @Published var username: String = ""
+    @Published var bio: String = ""
     
     let db = Firestore.firestore()
     func fetchData() async {
@@ -46,6 +47,12 @@ class ViewModel: ObservableObject {
                 if let username = data?["username"] as? String {
                     DispatchQueue.main.async {
                         self.username = username
+                    }
+                }
+                
+                if let bio = data?["bio"] as? String {
+                    DispatchQueue.main.async {
+                        self.bio = bio
                     }
                 }
             } else {
