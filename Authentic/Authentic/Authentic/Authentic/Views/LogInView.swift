@@ -322,7 +322,7 @@ struct LoginView: View {
             ProfileInformationView(isThirdPartyAuth: false, email: email, password: password)
         }
         .fullScreenCover(isPresented: $isLoginSuccessful) {
-            SuccessView()
+            DashboardView()
         }
     }
     
