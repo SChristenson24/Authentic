@@ -41,6 +41,7 @@
 		B22366712CA32D09006F1B31 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22366702CA32CFB006F1B31 /* Utilities.swift */; };
 		B22366732CA342CA006F1B31 /* SignInGoogleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22366722CA342C3006F1B31 /* SignInGoogleHelper.swift */; };
 		B22366752CA34623006F1B31 /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22366742CA3461C006F1B31 /* SuccessView.swift */; };
+		B24790AA2CEAE6FD002B70F8 /* DirectMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24790A92CEAE6F2002B70F8 /* DirectMessageView.swift */; };
 		B2A22B112CA3979E001DDF8B /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = B2A22B102CA3979E001DDF8B /* FacebookCore */; };
 		B2A22B132CA3979E001DDF8B /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = B2A22B122CA3979E001DDF8B /* FacebookLogin */; };
 		CFA7142A2CE2323A009AC93D /* PersonalDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA714292CE23234009AC93D /* PersonalDetailsView.swift */; };
@@ -106,6 +107,7 @@
 		B22366702CA32CFB006F1B31 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		B22366722CA342C3006F1B31 /* SignInGoogleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInGoogleHelper.swift; sourceTree = "<group>"; };
 		B22366742CA3461C006F1B31 /* SuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
+		B24790A92CEAE6F2002B70F8 /* DirectMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageView.swift; sourceTree = "<group>"; };
 		B2A22B142CA399DE001DDF8B /* Authentic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Authentic.entitlements; sourceTree = "<group>"; };
 		CFA714292CE23234009AC93D /* PersonalDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDetailsView.swift; sourceTree = "<group>"; };
 		CFA7142B2CE23B80009AC93D /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 		1D8D16B92CD141CD00836235 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B24790A92CEAE6F2002B70F8 /* DirectMessageView.swift */,
 				CFA7142B2CE23B80009AC93D /* EditProfileView.swift */,
 				CFA714292CE23234009AC93D /* PersonalDetailsView.swift */,
 				CFF921CC2CDDD36200B0856E /* SettingsView.swift */,
@@ -437,6 +440,7 @@
 				CFF921C32CDD2DAB00B0856E /* NotificationsView.swift in Sources */,
 				CFF921CB2CDDC9C400B0856E /* ProfilePictureView.swift in Sources */,
 				2155DC212B901CF8007D6E3A /* Persistence.swift in Sources */,
+				B24790AA2CEAE6FD002B70F8 /* DirectMessageView.swift in Sources */,
 				CFF921C12CDD2D8B00B0856E /* NewsView.swift in Sources */,
 				CFF921BD2CDD2D4D00B0856E /* HomeView.swift in Sources */,
 				CFA7142A2CE2323A009AC93D /* PersonalDetailsView.swift in Sources */,
