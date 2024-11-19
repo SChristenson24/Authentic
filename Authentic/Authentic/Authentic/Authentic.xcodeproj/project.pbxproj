@@ -44,6 +44,7 @@
 		B24790AA2CEAE6FD002B70F8 /* DirectMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24790A92CEAE6F2002B70F8 /* DirectMessageView.swift */; };
 		B2A22B112CA3979E001DDF8B /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = B2A22B102CA3979E001DDF8B /* FacebookCore */; };
 		B2A22B132CA3979E001DDF8B /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = B2A22B122CA3979E001DDF8B /* FacebookLogin */; };
+		B2F6D7952CED396400A343B7 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F6D7942CED395D00A343B7 /* ChatView.swift */; };
 		CFA7142A2CE2323A009AC93D /* PersonalDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA714292CE23234009AC93D /* PersonalDetailsView.swift */; };
 		CFA7142C2CE23B85009AC93D /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA7142B2CE23B80009AC93D /* EditProfileView.swift */; };
 		CFF921BB2CDD2CD100B0856E /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF921BA2CDD2CCB00B0856E /* DashboardView.swift */; };
@@ -109,6 +110,7 @@
 		B22366742CA3461C006F1B31 /* SuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
 		B24790A92CEAE6F2002B70F8 /* DirectMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessageView.swift; sourceTree = "<group>"; };
 		B2A22B142CA399DE001DDF8B /* Authentic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Authentic.entitlements; sourceTree = "<group>"; };
+		B2F6D7942CED395D00A343B7 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		CFA714292CE23234009AC93D /* PersonalDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDetailsView.swift; sourceTree = "<group>"; };
 		CFA7142B2CE23B80009AC93D /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		CFF921BA2CDD2CCB00B0856E /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 		1D8D16B92CD141CD00836235 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B2F6D7942CED395D00A343B7 /* ChatView.swift */,
 				B24790A92CEAE6F2002B70F8 /* DirectMessageView.swift */,
 				CFA7142B2CE23B80009AC93D /* EditProfileView.swift */,
 				CFA714292CE23234009AC93D /* PersonalDetailsView.swift */,
@@ -443,6 +446,7 @@
 				B24790AA2CEAE6FD002B70F8 /* DirectMessageView.swift in Sources */,
 				CFF921C12CDD2D8B00B0856E /* NewsView.swift in Sources */,
 				CFF921BD2CDD2D4D00B0856E /* HomeView.swift in Sources */,
+				B2F6D7952CED396400A343B7 /* ChatView.swift in Sources */,
 				CFA7142A2CE2323A009AC93D /* PersonalDetailsView.swift in Sources */,
 				B2168A7B2CAA4A1A00119782 /* SignInFacebookHelper.swift in Sources */,
 				214E071C2B9191E500208E20 /* LogInView.swift in Sources */,

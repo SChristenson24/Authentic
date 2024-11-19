@@ -5,6 +5,13 @@
 //  Created by John Mark Taylor on 11/17/24.
 //
 
+//
+//  DirectMessageView.swift
+//  Authentic
+//
+//  Created by John Mark Taylor on 11/17/24.
+//
+
 import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
@@ -33,10 +40,7 @@ struct DirectMessageView: View {
                 
                 // User List
                 List(users) { user in
-                    Button {
-                        selectedUser = user
-                        print("Selected user: \(user.username)")
-                    } label: {
+                    NavigationLink(destination: ChatView(user: user)) {
                         Text(user.username)
                     }
                 }
@@ -75,3 +79,4 @@ struct ChatUser: Identifiable, Codable {
     var username: String
     var email: String
 }
+
